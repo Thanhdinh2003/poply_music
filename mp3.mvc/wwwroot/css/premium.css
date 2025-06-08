@@ -1,0 +1,188 @@
+﻿.contents-pre {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin-top: 42px;
+    color: #ffffff;
+    min-height: 100vh;
+    padding-bottom: 42px;
+}
+.right-div {
+    padding: 0;
+}
+
+.offer-section {
+    width: 100%;
+    /*max-width: 800px;*/
+    padding: 50px 20px;
+    text-align: center;
+    background: linear-gradient(135deg, #8e2de2, #4a00e0);
+    border-radius: 12px;
+    color: white;
+}
+
+    .offer-section h1 {
+        font-size: 36px;
+        margin-bottom: 10px;
+        font-weight: bold;
+    }
+
+    .offer-section p {
+        font-size: 18px;
+        margin-bottom: 20px;
+        line-height: 1.6;
+    }
+
+    .offer-section .buttons {
+        display: flex;
+        justify-content: center;
+        gap: 15px;
+        margin-bottom: 15px;
+    }
+
+    .offer-section .button {
+        font-size: 16px;
+        padding: 12px 24px;
+        border: 2px solid #ffffff;
+        border-radius: 25px;
+        background: #ffffff;
+        color: #4a00e0;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        font-weight: bold;
+        text-decoration: none;
+    }
+
+        .offer-section .button.secondary {
+            background: transparent;
+            color: #ffffff;
+        }
+
+        .offer-section .button:hover {
+            background-color: #4a00e0;
+            color: #ffffff;
+        }
+
+.footer {
+    width: 100%;
+    padding: 30px 20px;
+    text-align: center;
+    border-radius: 12px;
+    margin-top: 20px;
+    color: white;
+}
+
+    .footer h2 {
+        font-size: 24px;
+        margin-bottom: 8px;
+        font-weight: bold;
+    }
+
+    .footer p {
+        font-size: 16px;
+        margin-bottom: 20px;
+        color: #e0e0e0;
+    }
+
+.payment-options {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+    .payment-options img {
+        width: 50px;
+        height: auto;
+    }
+
+
+
+
+
+
+.pricing-container {
+    display: flex;
+    gap: 20px;
+}
+
+.plan {
+    background-color: #222;
+    border-radius: 10px;
+    padding: 20px;
+    width: 356px;
+    text-align: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+    .plan.mini {
+        border: 2px solid #C2FF00;
+    }
+
+    .plan.individual {
+        border: 2px solid #FF82AC;
+    }
+
+    .plan h2 {
+        font-size: 1.5em;
+        margin-bottom: 10px;
+    }
+
+    .plan.mini h2 {
+        color: #C2FF00;
+    }
+
+    .plan.individual h2 {
+        color: #FF82AC;
+    }
+
+.price {
+    font-size: 1.2em;
+    margin-bottom: 20px;
+}
+
+.details {
+    text-align: left;
+    margin-bottom: 20px;
+}
+
+    .details li {
+        margin-bottom: 10px;
+    }
+
+.btn {
+    display: inline-block;
+    padding: 10px 20px;
+    border-radius: 20px;
+    font-size: 1em;
+    text-align: center;
+    cursor: pointer;
+    border: none;
+}
+
+    .btn.mini {
+        background-color: #C2FF00;
+        color: #111;
+    }
+
+    .btn.individual {
+        background-color: #FF82AC;
+        color: #111;
+    }
+
+.terms {
+    font-size: 0.8em;
+    color: #888;
+    margin-top: 10px;
+}
+
+
+.premium-active {
+    background-color: green;
+    color: white;
+}
+
+.premium-inactive {
+    background-color: gray;
+    color: black;
+}

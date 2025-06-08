@@ -1,0 +1,32 @@
+﻿@model App.Domain.Entities.Category
+@{
+    ViewData["Title"] = "Chỉnh sửa thể loại - " + Model.Name;
+}
+
+<div class="col-10" style="margin-bottom: 44px; margin-top: 24px;min-height:53vh;">
+    <h3 style=" color: white">
+        Chỉnh sửa thông tin thể loại - @Model.Name
+    </h3>
+
+    <form method="post" asp-action="update" asp-asp-controller="category">
+        <input style="display: none;" name="Id" value="@Model.Id" />
+        <table class="table">
+            <tr>
+                <td style="color: white">
+                    Tên thể loại
+                </td>
+                <td>
+                    <input name="Name" type="text" value="@Model.Name" />
+                </td>
+            </tr>
+        </table>
+
+
+        <div class="d-flex flex-row-reverse">
+            <button style="width: 100px;" class="d-block rounded-3 btn btn-primary mx-1" type="submit">Lưu</button>
+            <a style="width: 100px;" class="d-block rounded-3 btn btn-danger mx-1" href="/category/getDetail?id=@Model.Id">Hủy</a>
+        </div>
+
+    </form>
+
+</div>

@@ -1,0 +1,55 @@
+﻿@{
+    ViewData["Title"] = "Ca sĩ";
+    ViewData["HomePage"] = "text-dark";
+    ViewData["SelectHome"] = "active";
+    var newestList = ViewData["NewestList"];
+    var authorList = ViewData["AuthorList"];
+}
+
+<title> Mine Music - Ca sĩ</title>
+<head>
+    <link rel="stylesheet" href="~/css/Home.css" asp-append-version="true" />
+</head>
+
+<!-- Khối phải (chiếm 8 cột) -->
+<div class="col-10 right-div">
+
+    <div class="content-right">
+        <div class="right-music">
+            <a href="/Home/Index" >Tất cả</a>
+        </div>
+        <div class="right-music">
+            <a href="/Home/MusicTab">Nhạc</a>
+        </div>
+        <div class="right-all allin">
+            <a href="/Home/AuthorTab" style="color: black">Ca sĩ</a>
+        </div>
+    </div>
+
+    <!-- Nghệ Sĩ Yêu Thích -->
+    <div class="d-flex justify-content-between align-items-center mt-4">
+        <h4 class="mb-0">Nghệ sĩ yêu thích</h4>
+        <div class="show-all">
+            <a class="show-all" href="/Home/ListArtist">Hiển tất cả</a>
+        </div>
+    </div>
+    <div class="row favorite-songs">
+
+        <partial name="./Common/Media/Carousel/_SlideslArtistPartial" model="authorList" />
+
+    </div>
+
+    <!-- Nghệ Sĩ Mới ra mắt -->
+    <div class="d-flex justify-content-between align-items-center mt-4">
+        <h4 class="mb-0">Nghệ sĩ mới ra mắt</h4>
+        <div class="show-all">
+            <a class="show-all" href="/Home/ListArtist">Hiển tất cả</a>
+        </div>
+    </div>
+    <div class="row favorite-songs">
+
+        <partial name="./Common/Media/Carousel/_SlideslArtistPartial" model="newestList" />
+
+    </div>
+
+</div>

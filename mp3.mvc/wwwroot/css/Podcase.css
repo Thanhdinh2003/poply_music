@@ -1,0 +1,40 @@
+﻿.right-div {
+    padding: 0;
+}
+
+.content-right {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.right-all {
+    font-size: 16px;
+    background-color: white;
+    padding: 10px;
+    border-radius: 20px;
+}
+
+.right-music {
+    font-size: 16px;
+    color: white;
+}
+
+.right-all, .right-music {
+    padding: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+    .right-all:hover, .right-music:hover {
+        color: #1DB954;
+    }
+
+.show-all-a {
+    cursor: pointer;
+}
+
+
+a:hover {
+    color: #1DB954;
+}

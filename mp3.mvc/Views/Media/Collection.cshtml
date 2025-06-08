@@ -1,0 +1,72 @@
+﻿@using App.Domain.Entities
+@model BasePagination<App.Domain.Entities.Media>
+
+@{
+    ViewData["Title"] = "Bộ sưu tập";
+    var nextPageEnable = Model.Page == Model.TotalPage ? "disabled" : "";
+    var previousPageBtnEnable = Model.Page > 1 ? "" : "disabled";
+    var previousPageLink = $"/media/collection?page={Model.Page - 1}";
+    var nextPageLink = $"/media/collection?page={Model.Page + 1}";
+    ViewData["SelectCollection"] = "active";
+}
+
+<div class="col-10 right-div" style="margin-top: 24px;">
+    <h3 style="text-align:center; color: white">Bài hát được yêu thích</h3>
+    <!-- Create a row for responsive cards per row -->
+    <div class="card-list-container row d-flex g-3" style="justify-content: flex-start;">
+        @foreach (var (item, index) in Model.Items.Select((x, i) => (x, i)))
+        {
+            if(index >= 5)
+            {
+                continue;
+            }
+            <!-- Use responsive column classes to control layout on different screen sizes -->
+            <div class="col-6 col-md-4 col-lg-3 col-xl-2 d-flex justify-content-center mb-4">
+                <partial name="./Common/Media/_musicCardTemplatePartial" model="@item" />
+            </div>
+        }
+    </div>
+
+    <div class="card-list-container row d-flex g-3" style="justify-content: flex-start;">
+        @foreach (var (item, index) in Model.Items.Select((x, i) => (x, i)))
+        {
+            if (index < 5)
+            {
+                continue;
+            }
+            <!-- Use responsive column classes to control layout on different screen sizes -->
+            <div class="col-6 col-md-4 col-lg-3 col-xl-2 d-flex justify-content-center mb-4">
+                <partial name="./Common/Media/_musicCardTemplatePartial" model="@item" />
+            </div>
+        }
+    </div>
+
+    <!-- Pagination controls -->
+    <div class="d-flex justify-content-end mt-3">
+        <a href="@previousPageLink" class="page-link rounded-3 @previousPageBtnEnable">
+            <img src="/images/icons/back.png" style="width: 20px;" />
+        </a>
+        <div class="page-link page-number rounded-3 text-black">@Model.Page / @Model.TotalPage</div>
+        <a href="@nextPageLink" class="page-link rounded-3 @nextPageEnable">
+            <img src="/images/icons/next.png" style="width: 20px;" />
+        </a>
+    </div>
+</div>
+
+<style>
+    .page-link {
+        width: 120px;
+        text-align: center;
+    }
+
+    .page-number {
+        width: auto;
+        text-align: center;
+    }
+
+    a.disabled {
+        pointer-events: none;
+        cursor: default;
+        color: gray;
+    }
+</style>

@@ -1,0 +1,89 @@
+﻿@using App.Domain.Entities
+@{
+    ViewData["Title"] = "Bài hát";
+    ViewData["HomePage"] = "text-dark";
+    var newestList = ViewData["NewestList"];
+    var trendingList = ViewData["TrendingList"];
+    ViewData["SelectHome"] = "active";
+}
+
+<title> Mine Music - Bài hát</title>
+<head>
+    <link rel="stylesheet" href="~/css/Home.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/MusicTab.css" asp-append-version="true" />
+</head>
+
+<!-- Khối phải (chiếm 8 cột) -->
+<div class="col-10 right-div">
+
+    <div class="content-right">
+        <div class="right-music">
+            <a href="/Home/Index">Tất cả</a>
+        </div>
+        <div class=" right-all allin">
+            <a href="/Home/MusicTab" style="color: black">Nhạc</a>
+        </div>
+        <div class="right-music">
+            <a href="/Home/AuthorTab">Ca sĩ</a>
+        </div>
+    </div>
+
+    <!-- Đề xuất cho bạn -->
+    <div class="d-flex justify-content-between align-items-center mt-4">
+        <h4 class="mb-0">Đề xuất cho bạn</h4>
+        <div class="show-all">
+            <a class="show-all" href="/Home/ListMusic">Hiển tất cả</a>
+        </div>
+    </div>
+    <div class="row favorite-songs">
+
+        <partial name="./Common/Media/Carousel/_SlidesWithControlPartial" model="trendingList" />
+
+    </div>
+
+    <!-- Ca khúc mới ra mắt -->
+    <div class="d-flex justify-content-between align-items-center mt-4">
+        <h4 class="mb-0 " style=" color: white">Ca khúc mới ra mắt</h4>
+        <div class="show-all">
+            <a class="show-all" href="/Home/ListMusic">Hiển tất cả</a>
+        </div>
+    </div>
+    <div class="row favorite-songs">
+
+        <partial name="./Common/Media/Carousel/_SlidesWithControlPartial" model="newestList" />
+
+    </div>
+
+
+    <div class="card-topvn">
+        <div class="cards">
+            <!-- Top Label with Icon -->
+            <div class="top-label">
+                <img src="~/images/logo.png">
+                <span>Top Bài Hát Việt Nam</span>
+            </div>
+
+            <!-- Title and Subtitle -->
+            <div class="content">
+                <div class="title">Bài hát hàng đầu tại Việt Nam</div>
+                <div class="subtitle">Danh sách phát • Mine Music</div>
+            </div>
+        </div>
+
+        <div class="cardsd">
+            <!-- Top Label with Icon -->
+            <div class="top-labels">
+                <img src="~/images/logo.png">
+                <span>Top Bài Hát Việt Nam</span>
+            </div>
+
+            <!-- Title and Subtitle -->
+            <div class="contents">
+                <div class="titles">Bài hát hàng đầu tại Việt Nam</div>
+                <div class="subtitles">Danh sách phát • Mine Music</div>
+            </div>
+        </div>
+
+    </div>
+
+</div>

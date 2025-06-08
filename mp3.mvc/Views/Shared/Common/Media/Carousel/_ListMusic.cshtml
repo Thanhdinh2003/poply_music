@@ -1,0 +1,221 @@
+﻿@{
+    var id = Guid.NewGuid();
+    var listMusic = ViewData["ListMusic"] as List<App.Domain.Entities.Media>;
+}
+
+@if (listMusic != null && listMusic.Count > 0)
+{
+    <ul class="song-list">
+        @for (int i = 0; i < listMusic.Count; i++)
+        {
+            var item = listMusic[i];
+            var index = i + 1;
+            var content = item.MediaContent.FirstOrDefault();
+
+            <li class="song-item">
+                <div class="song">
+                    <div class="song-info">
+                        <span style="color: white">@index</span>
+                        <button class="play-btn" data-song-url="@item.ContentUrl" data-song-id="@item.Id" id="play-btn-@i">
+                            <i class="fas fa-play"></i>
+                            <i class="fa-solid fa-pause" id="pauseBtn" style="display: none;"></i>
+                        </button>
+                        <img src="@content?.Value" alt="Bìa album của @item.Name" />
+                        <a class="song-info-p" href="/media/play?id=@item.Id">
+                            @item.Name <br />
+                            <span class="artist">@item.Author?.Name</span>
+                        </a>
+                    </div>
+                    <div class="song-playcount">
+                        @item.MediaViewHistory?.Count
+                    </div>
+                    <div class="song-album">
+                        @item.Category?.Name
+                    </div>
+                    <div class="song-time">
+                        3:45
+                    </div>
+                </div>
+            </li>
+        }
+    </ul>
+
+    <footer id="music-control-bar" style="display: none; min-height:0">
+        <div class="music-control">
+            <div style="display:flex; gap: 8px">
+                <button id="prev-song">
+                    <i class="fas fa-backward"></i>
+                </button>
+                <button id="play-pause-song">
+                    <i class="fas fa-play"></i>
+                </button>
+                <button id="next-song">
+                    <i class="fas fa-forward"></i>
+                </button> 
+            </div>
+            <div class="song-details">
+                <img id="album-art" src="" alt="Album art" />
+                <div>
+                    <p id="current-song-name" style="margin: 0px">Song Name</p>
+                    <p id="current-artist-name" style="margin: 0px">Artist Name</p>
+                </div>
+            </div>
+            <div class="volume-control">
+                <button id="mute-btn">🔇</button>
+                <input type="range" id="volume-slider" min="0" max="100" value="100">
+            </div>
+        </div>
+    </footer>
+}
+else
+{
+    <p style="color: white">Không có bài hát nào trong danh sách.</p>
+}
+
+<script>
+    const playButtons = document.querySelectorAll('.play-btn');
+    let currentlyPlaying = null;
+    let currentlyPlayingButton = null;
+    let currentIndex = 0;
+    let previousVolume = 1;
+    const listMusic = @Html.Raw(Json.Serialize(ViewData["ListMusic"]));
+    playButtons.forEach((btn, index) => {
+        btn.addEventListener('click', (e) => {
+            const songId = btn.getAttribute('data-song-id');
+            const songSrc = btn.getAttribute('data-song-url');
+            currentIndex = index;
+            playMusic(songId, songSrc, btn);
+        });
+    });
+    // Hàm phát nhạc
+    function playMusic(id, src, button) {
+        if (!id) {
+            console.error("Không tìm thấy ID bài hát.");
+            return;
+        }
+        // Nếu đã có bài hát đang phát
+        if (currentlyPlaying) {
+            if (currentlyPlaying.src === src) {
+                if (currentlyPlaying.paused) {
+                    currentlyPlaying.play().then(() => {
+                        button.innerHTML = '<i class="fa-solid fa-pause"></i>';
+                        document.getElementById('play-pause-song').innerHTML = '<i class="fas fa-pause"></i>';
+                        updateMusicControlBar(button);
+                    }).catch(error => {
+                        console.error("Lỗi phát nhạc:", error);
+                    });
+                } else {
+                    currentlyPlaying.pause();
+                    button.innerHTML = '<i class="fa-solid fa-play"></i>';
+                    document.getElementById('play-pause-song').innerHTML = '<i class="fas fa-play"></i>';
+                }
+                return;
+            } else {
+                // Dừng bài hát hiện tại
+                currentlyPlaying.pause();
+                currentlyPlayingButton.innerHTML = '<i class="fa-solid fa-play"></i>';
+            }
+        }
+
+        // Phát bài hát mới
+        currentlyPlaying = new Audio(src);
+        currentlyPlaying.play().then(() => {
+            button.innerHTML = '<i class="fa-solid fa-pause"></i>';
+            document.getElementById('play-pause-song').innerHTML = '<i class="fas fa-pause"></i>';
+            currentlyPlayingButton = button;
+            updateMusicControlBar(button);
+        }).catch(error => {
+            console.error("Lỗi phát nhạc:", error);
+        });
+        // Khi bài hát bị dừng
+        currentlyPlaying.addEventListener('pause', () => {
+            button.innerHTML = '<i class="fa-solid fa-play"></i>';
+            document.getElementById('play-pause-song').innerHTML = '<i class="fas fa-play"></i>';
+        });
+        // Khi bài hát kết thúc
+        currentlyPlaying.addEventListener('ended', () => {
+            button.innerHTML = '<i class="fa-solid fa-play"></i>';
+            document.getElementById('play-pause-song').innerHTML = '<i class="fas fa-play"></i>';
+            playNextSong();
+        });
+    }
+    // Hàm để cập nhật thanh điều khiển nhạc
+    function updateMusicControlBar(button) {
+        const footer = document.getElementById('music-control-bar');
+        const songName = button.closest('.song').querySelector('.song-info-p').textContent.trim();
+        const artistName = button.closest('.song').querySelector('.artist').textContent.trim();
+        const albumArt = button.closest('.song').querySelector('img').src;
+        // Cập nhật thông tin bài hát trong thanh điều khiển
+        document.getElementById('current-song-name').textContent = songName;
+        document.getElementById('current-artist-name').textContent = artistName;
+        document.getElementById('album-art').src = albumArt;
+        footer.style.display = 'flex';
+    }
+    // Nút play/pause trên thanh điều khiển nhạc
+    document.getElementById('play-pause-song').addEventListener('click', function () {
+        if (currentlyPlaying) {
+            if (currentlyPlaying.paused) {
+                currentlyPlaying.play();
+                this.innerHTML = '<i class="fas fa-pause"></i>';
+                currentlyPlayingButton.innerHTML = '<i class="fa-solid fa-pause"></i>';
+            } else {
+                currentlyPlaying.pause();
+                this.innerHTML = '<i class="fas fa-play"></i>';
+                currentlyPlayingButton.innerHTML = '<i class="fa-solid fa-play"></i>';
+            }
+        }
+    });
+
+    // Nút "Next" để chuyển sang bài hát tiếp theo
+    document.getElementById('next-song').addEventListener('click', function () {
+        playNextSong();
+    });
+
+    // Nút "Previous" để chuyển về bài hát trước
+    document.getElementById('prev-song').addEventListener('click', function () {
+        playPreviousSong();
+    });
+
+    document.getElementById('volume-slider').addEventListener('input', function () {
+        const volumeValue = this.value / 100;
+        if (currentlyPlaying) {
+            currentlyPlaying.volume = volumeValue;
+        }
+        if (volumeValue === 0) {
+            document.getElementById('mute-btn').textContent = '🔇';
+        } else {
+            document.getElementById('mute-btn').textContent = '🔊';
+        }
+    });
+
+    // Nút tắt/bật âm thanh
+    document.getElementById('mute-btn').addEventListener('click', function () {
+        if (currentlyPlaying) {
+            if (currentlyPlaying.volume === 0) {
+                currentlyPlaying.volume = previousVolume;
+                this.textContent = '🔊';
+                document.getElementById('volume-slider').value = previousVolume * 100;
+            } else {
+                previousVolume = currentlyPlaying.volume;
+                currentlyPlaying.volume = 0;
+                this.textContent = '🔇';
+                document.getElementById('volume-slider').value = 0;
+            }
+        }
+    });
+    function playNextSong() {
+        currentIndex = (currentIndex + 1) % listMusic.length;
+        const nextSong = listMusic[currentIndex];
+        const nextSongId = nextSong.id; 
+        const nextSongUrl = nextSong.contentUrl;
+        playMusic(nextSongId, nextSongUrl, document.getElementById(`play-btn-${currentIndex}`));
+    }
+    function playPreviousSong() {
+        currentIndex = (currentIndex - 1 + listMusic.length) % listMusic.length;
+        const prevSong = listMusic[currentIndex];
+        const prevSongId = prevSong.id;
+        const prevSongUrl = prevSong.contentUrl;
+        playMusic(prevSongId, prevSongUrl, document.getElementById(`play-btn-${currentIndex}`));
+    }
+</script>
+

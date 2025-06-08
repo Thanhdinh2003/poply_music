@@ -1,0 +1,85 @@
+﻿@{
+    var data = ViewBag.Data;
+    var nextPageEnable = data.Page == data.TotalPage ? "disabled" : "";
+    var previousPageBtnEnable = data.Page > 1 ? "" : "disabled";
+    var previousPageLink = $"/user/manage?searchUser={ViewData["searchUser"]}&page={data.Page - 1}";
+    var nextPageLink = $"/user/manage?searchUser={ViewData["searchUser"]}&page={data.Page + 1}";
+    var roleClaim = User.Claims.FirstOrDefault(p => p.Type == "role");
+    var isAdminRole = roleClaim != null && roleClaim.Value == "admin";
+    ViewData["ManagePage"] = isAdminRole ? "text-light" : "";
+    ViewData["Title"] = isAdminRole ? "Quản trị tài khoản Premium" : "Danh sách tài khoản Premium";
+}
+
+<div class="col-10" style="margin-bottom: 44px; margin-top: 24px;min-height:53vh;">
+    <div class="content-container">
+        <h3 style="text-align:center; color: white">Danh sách tài khoản yêu cầu</h3>
+        <table class="table" style="background-color: white; border-radius: 4px;">
+            <thead>
+                <tr>
+                    <th scope="col">Số thứ tự</th>
+                    <th scope="col">Tên đăng nhập</th>
+                    <th scope="col">Tên hiểu thị</th>
+                    <th scope="col">Trạng thái phê duyệt</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                @for (var i = 0; i < data.Items.Count; i++)
+                {
+                    var item = data.Items[i];
+                    var index = i + 1 + (data.Page - 1) * data.PageSize;
+                    <tr>
+                        <td scope="row">
+                            @index
+                        </td>
+                        <td>
+                            @item.User.Username
+                        </td>
+                        <td>
+                            @item.User.DisplayName
+                        </td>
+                        <td class="d-flex">
+                            @if (item.IsAccepted)
+                            {
+                                <a class="d-block rounded-3 btn btn-danger mx-1">Đã phê duyệt</a>
+                            }
+                            else
+                            {
+                                <a class="d-block rounded-3 btn btn-success mx-1" href="/user/AcceptRequest?id=@item.Id">Chưa phê duyệt</a>
+                            }
+                        </td>
+                    </tr>
+                }
+            </tbody>
+
+        </table>
+        <div class="d-flex justify-content-end g-3" style="gap: 12px;">
+            <a href="@previousPageLink" class="page-link rounded-3 @previousPageBtnEnable">
+                <i class="fa-solid fa-backward-step"></i>
+            </a>
+            <div class="page-link page-number rounded-3 text-black">@data.Page / @data.TotalPage</div>
+            <a href="@nextPageLink" class="page-link rounded-3 @nextPageEnable">
+                <i class="fa-solid fa-forward-step"></i>
+            </a>
+        </div>
+
+    </div>
+</div>
+<style>
+    .page-link {
+        width: 120px;
+        text-align: center;
+    }
+
+    .page-number {
+        width: auto;
+        text-align: center;
+    }
+
+    a.disabled {
+        pointer-events: none;
+        cursor: default;
+        color: gray;
+        text-decoration: none;
+    }
+</style>

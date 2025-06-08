@@ -1,0 +1,42 @@
+﻿@{
+    ViewBag.Title = "Chi tiết";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    var trendingList = ViewData["TrendingList"];
+}
+<title> Mine Music - Chi tiết</title>
+<head>
+    <link rel="stylesheet" href="~/css/explorer.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/MusicDetails.css" asp-append-version="true" />
+</head>
+
+
+<div class="col-10 right-div">
+    <div class="music-detail-container">
+        @* <div class="album-cover">
+        <img src="https://via.placeholder.com/300" alt="Album Cover">
+        </div>
+        <div class="song-info">
+        <h1>Seven (feat. Latto)</h1>
+        <h2>Jung Kook, Latto</h2>
+        <p>Lượt phát: 4.066.056</p>
+        <p>Phát hành: 2023-07-14</p>
+        <p class="description">Bài hát "Seven" là một sản phẩm âm nhạc nổi bật của Jung Kook hợp tác cùng Latto. Bài hát nhanh chóng trở thành hit quốc tế nhờ giai điệu bắt tai và lời nhạc đầy cảm xúc...</p>
+        <div class="song-controls">
+        <button class="play-btn"><i class="fas fa-play"></i> Phát</button>
+        <button class="like-btn"><i class="fas fa-heart"></i> Thích</button>
+        <button class="share-btn"><i class="fas fa-share"></i> Chia sẻ</button>
+        </div>
+        </div> *@
+    </div>
+
+    <!-- Đề xuất cho bạn -->
+    <div class="d-flex justify-content-between align-items-center mt-4">
+        <h4 class="mb-0">Đề xuất cho bạn</h4>
+    </div>
+    <div class="row favorite-songs">
+
+        <partial name="./Common/Media/Carousel/_SlidesWithControlPartial" model="trendingList" />
+
+    </div>
+</div>

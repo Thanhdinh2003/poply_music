@@ -1,0 +1,65 @@
+﻿@model mp3.mvc.Models.LoginViewModel
+@{
+    ViewData["Title"] = "Đăng nhập";
+}
+
+<div class="col-10 right-div">
+<div class="wrapper fadeInDown">
+    <div id="formContent">
+        <!-- Tabs Titles -->
+        <div class="login-container" style="padding-top: 70px">
+            
+            <h1 class="titleLarge">Đăng nhập vào MineMusic</h1>
+
+            <ul class="jIWbvU">
+                <li class="itDfMP">
+                    <button class="google-login">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" clip-rule="evenodd" d="M21.6 12.2273C21.6 11.5182 21.5364 10.8364 21.4182 10.1819H12V14.0501H17.3818C17.15 15.3001 16.4455 16.3592 15.3864 17.0682V19.5773H18.6182C20.5091 17.8364 21.6 15.2728 21.6 12.2273Z" fill="#4285F4" />
+                            <path fill-rule="evenodd" clip-rule="evenodd" d="M12.0001 21.9999C14.7001 21.9999 16.9637 21.1044 18.6183 19.5772L15.3864 17.0681C14.491 17.6681 13.3455 18.0226 12.0001 18.0226C9.39554 18.0226 7.19099 16.2635 6.40463 13.8999H3.06372V16.4908C4.70918 19.759 8.09099 21.9999 12.0001 21.9999Z" fill="#34A853" />
+                            <path fill-rule="evenodd" clip-rule="evenodd" d="M6.40455 13.8999C6.20455 13.2999 6.09091 12.659 6.09091 11.9999C6.09091 11.3409 6.20455 10.6999 6.40455 10.0999V7.50903H3.06364C2.38636 8.85903 2 10.3863 2 11.9999C2 13.6136 2.38636 15.1409 3.06364 16.4909L6.40455 13.8999Z" fill="#FBBC05" />
+                            <path fill-rule="evenodd" clip-rule="evenodd" d="M12.0001 5.97727C13.4683 5.97727 14.7864 6.48182 15.8228 7.47273L18.691 4.60455C16.9592 2.99091 14.6955 2 12.0001 2C8.09099 2 4.70918 4.24091 3.06372 7.50909L6.40463 10.1C7.19099 7.73636 9.39554 5.97727 12.0001 5.97727Z" fill="#EA4335" />
+                        </svg>
+                        <span class="encore-text">Tiếp tục bằng Google</span>
+                    </button>
+                    <button class="google-login">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                            <circle cx="12" cy="12" r="10" fill="white" />
+                            <path d="M22 12C22 6.477 17.523 2 12 2C6.477 2 2 6.477 2 12C2 16.991 5.657 21.128 10.438 21.878V14.891H7.898V12H10.438V9.797C10.438 7.291 11.93 5.907 14.215 5.907C15.308 5.907 16.453 6.102 16.453 6.102V8.562H15.193C13.95 8.562 13.563 9.333 13.563 10.125V12H16.336L15.893 14.89H13.563V21.878C18.343 21.128 22 16.991 22 12Z" fill="#1877F2" />
+                        </svg>
+                        <span class="encore-text">Tiếp tục bằng Google</span>
+                    </button>
+                </li>
+            </ul>
+
+            <hr class="gWxmho" />
+            <!-- Login Form -->
+            <form method="post" asp-action="login" class="login-form">
+                <div class="dONESo">
+                    <div class="bSfdyE">
+                        <label class="bGmVWE"> Email hoặc tên người dùng</label>
+                        <input type="text" name="username" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Email hoặc tên người dùng">
+                    </div>
+
+                    <div class="bSfdyE" style="margin-top: 12px">
+                        <label class="bGmVWE"> Mật khẩu</label>
+                        <input type="password" name="password" class="form-control" id="exampleInputPassword1" placeholder="Mật khẩu">
+                    </div>
+                </div>
+
+                <button class="login-button" type="submit">
+                    Đăng nhập
+                </button>
+            </form>
+
+            <!-- Remind Passowrd -->
+            <div id="formFooter">
+                <a class="underlineHover" href="#">Quên mật khẩu của bạn?</a>
+                <br />
+                <a class="underlineHovera" asp-action="register">Bạn chưa có tài khoản? <span class="underlineHover"> Đăng ký MineMusic</span></a>
+            </div>
+        </div>
+
+    </div>
+</div>
+</div>

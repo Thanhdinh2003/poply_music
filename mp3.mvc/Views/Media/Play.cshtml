@@ -1,0 +1,143 @@
+﻿@model App.Domain.Entities.Media
+
+@{
+    ViewData["Title"] = "Phát - " + Model.Name;
+    var roleClaim = User.Claims.FirstOrDefault(p => p.Type == "role");
+    var isAdminRole = roleClaim != null && roleClaim.Value == "admin";
+    var trendingList = ViewData["TrendingList"];
+    var isPremiumAccount = ViewData["IsPremiumAccount"];
+}
+
+<title> Mine Music - List Music</title>
+<head>
+    <link rel="stylesheet" href="~/css/explorer.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/MusicDetails.css" asp-append-version="true" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+</head>
+
+<div class="col-10 right-div">
+    <div class="music-detail-container">
+        <div class="album-cover">
+            <partial name="./Common/Media/_musicAvatarPreviewPartial" model="@Model.MediaContent" />
+
+            <audio id="audioPlayer" class="invisible" controls>
+                <source src="@Model.ContentUrl" type="audio/mpeg">
+                Your browser does not support the audio element.
+            </audio>
+
+            <div class="controls d-flex">
+                <a class="control-icon" href="/media/backward?id=@Model.Id">
+                    <i class="fa-solid fa-backward"></i>
+                </a>
+                <button id="playPauseButton">
+                    <i class="fa-solid fa-play" id="playBtn"></i>
+                    <i class="fa-solid fa-pause" id="pauseBtn" style="display: none;"></i>
+                </button>
+                <a class="control-icon" href="/media/forward?id=@Model.Id">
+                    <i class="fa-solid fa-forward"></i>
+                </a>
+            </div>
+
+            <progress id="progressBar" value="0" max="100"></progress>
+        </div>
+
+        <div class="song-info">
+            <h1>@Model.Name</h1>
+            <h4 style="color: white">
+                <a href="/author/getDetail/@Model.AuthorId">
+                    @Model.Author?.Name
+                </a>
+            </h4>
+            <p>Lượt phát: @Model.MediaViewHistory.Count</p>
+            <p>Phát hành: @Model.CreatedAt.ToString("dd-MM-yyyy")</p>
+            <p class="description">@Model.Description</p>
+            <div class="song-controls">
+
+                @if (isPremiumAccount != null &&  (bool) isPremiumAccount == true){
+                    <!-- Hiển thị nút tải xuống nếu là tài khoản premium -->
+                    <a href="@Model.ContentUrl" download class="d-block rounded-3 btn btn-success mx-1 like-btn d-flex" >
+                        <i class="fas fa-download me-2"></i> Tải xuống
+                    </a>
+                }
+
+                @if (Context.User.Identity != null && Context.User.Identity.IsAuthenticated)
+                {
+                    if (!ViewBag.isFavouriteMedia)
+                    {
+                        <a style="width: 100px;" class="d-block rounded-3 btn btn-success mx-1 like-btn" href="/media/like?id=@Model.Id">Yêu thích</a>
+                    }
+                    else
+                    {
+                        <a style="width: 100px;" class="d-block rounded-3 btn btn-danger mx-1 share-btn" href="/media/unlike?id=@Model.Id">Bỏ thích</a>
+
+                    }
+
+                }
+
+                @if (isAdminRole)
+                {
+                    <a style="width: 100px;" class="d-block rounded-3 btn btn-warning mx-1" href="/media/update?id=@Model.Id">Sửa</a>
+                    <a style="width: 100px;" class="d-block rounded-3 btn btn-danger mx-1" href="/media/delete?id=@Model.Id">Xóa</a>
+                }
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Đề xuất cho bạn -->
+    <div class="d-flex justify-content-between align-items-center mt-4">
+        <h4 class="mb-0">Đề xuất cho bạn</h4>
+    </div>
+    <div class="row favorite-songs">
+        <partial name="./Common/Media/Carousel/_SlidesWithControlPartial" model="trendingList" />
+    </div>
+</div>
+
+<script>
+    const audio = document.getElementById('audioPlayer');
+    const progressBar = document.getElementById('progressBar');
+    const playPauseButton = document.getElementById('playPauseButton');
+    const nextButton = document.getElementById('nextButton');
+    const playBtn = document.getElementById('playBtn');
+    const pauseBtn = document.getElementById('pauseBtn');
+    let isPlaying = false;
+
+    // Update progress bar as audio plays
+    audio.addEventListener('timeupdate', () => {
+        const currentTime = audio.currentTime;
+        const duration = audio.duration;
+        if (duration) {
+            const progress = (currentTime / duration) * 100;
+            progressBar.value = progress;
+        }
+    });
+
+    // Seek audio when progress bar is clicked
+    progressBar.addEventListener('click', (event) => {
+        const clickedPosition = event.offsetX;
+        const progressBarWidth = progressBar.clientWidth;
+        const duration = audio.duration;
+        if (duration) {
+            const seekTime = (clickedPosition / progressBarWidth) * audio.duration;
+            audio.currentTime = seekTime;
+        }
+    });
+
+    // Play/Pause functionality
+    playPauseButton.addEventListener('click', () => {
+        if (isPlaying) {
+            audio.pause();
+            playBtn.style.display = 'block';
+            pauseBtn.style.display = 'none';
+        } else {
+            audio.play();
+            playBtn.style.display = 'none';
+            pauseBtn.style.display = 'block';
+        }
+        isPlaying = !isPlaying;
+    });
+
+    nextButton.addEventListener('click', () => {
+        alert('Next track');
+    });
+</script>

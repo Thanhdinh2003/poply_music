@@ -1,0 +1,92 @@
+﻿@{
+    ViewData["Title"] = "Premium";
+    ViewData["HomePage"] = "text-dark";
+
+    var isPremiumAccount = ViewData["IsPremiumAccount"];
+    var expiredDate = DateTime.Now.AddMonths(3);
+}
+
+<title> Mine Music - Premium</title>
+<head>
+    <link rel="stylesheet" href="~/css/premium.css" asp-append-version="true" />
+</head>
+
+<!-- Khối phải (chiếm 8 cột) -->
+<div class="col-10 right-div">
+    <div class="contents-pre">
+        <div class="offer-section">
+            <h1>29,500₫ cho 3 tháng dùng gói Premium</h1>
+            <p>
+                Ưu đãi kết thúc vào ngày @expiredDate.Day/@expiredDate.Month/@expiredDate.Year. Nghe nhạc không quảng cáo và không cần kết nối mạng.<br>
+                Sau đó chỉ 59,000₫/tháng. Hủy bất cứ lúc nào.
+            </p>
+            <div class="buttons">
+                <a href="#" class="button">Mua Premium cao cấp</a>
+                <a href="#" class="button secondary">Xem tất cả các gói</a>
+            </div>
+            <p>Chỉ áp dụng cho gói Premium cao cấp. 29,500 ₫ cho 3 tháng, sau đó là 59,000 ₫/tháng. Chỉ áp dụng ưu đãi nếu bạn chưa từng dùng gói Premium. <a href="/Home/Privacy" style="color: #b3b3b3; text-decoration: underline;">Có áp dụng điều khoản.</a></p>
+            <p>Ưu đãi kết thúc vào ngày @expiredDate.Day tháng @expiredDate.Month, @expiredDate.Year.</p>
+        </div>
+
+        <div class="footer">
+            <h2>Gói hợp túi tiền cho mọi hoàn cảnh</h2>
+            <p>Chọn một gói Premium để nghe nhạc không quảng cáo thỏa thích trên điện thoại, loa và các thiết bị khác. Thanh toán theo nhiều cách. Hủy bất cứ lúc nào.</p>
+            <div class="payment-options">
+                <img src="	https://cdn.haitrieu.com/wp-content/uploads/2022/10/Logo-MoMo-Circle.png" alt="MoMo">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/5/5e/Visa_Inc._logo.svg" alt="Visa">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/2/2a/Mastercard-logo.svg" alt="MasterCard">
+            </div>
+
+        </div>
+
+        <div class="pricing-container">
+            <!-- Mini Plan -->
+            <div class="plan mini">
+                <h2>Gói cơ bản</h2>
+                <ul class="details">
+                    <li>1 tài khoản Premium chỉ dành cho thiết bị di động</li>
+                    <li>Nghe tối đa 30 bài hát trên 1 thiết bị khi không có kết nối mạng</li>
+                    <li>Thanh toán một lần</li>
+                    <li>Chất lượng âm thanh cơ bản</li>
+                </ul>
+                @if (isPremiumAccount != null && (bool)isPremiumAccount == false)
+                {
+                    <button class="btn mini">Gói Premium hiện tại</button>
+                    <div class="terms">Có áp dụng điều khoản.</div>
+                }
+               
+            </div>
+
+            <!-- Individual Plan -->
+            <div class="plan individual">
+                <h2>Gói cao cấp</h2>
+                <div class="price">29.500 ₫ cho 3 tháng</div>
+                <ul class="details">
+                    <li>1 tài khoản Premium</li>
+                    <li>Tải nhạc không giới hạn</li>
+                    <li>Hủy bất cứ lúc nào</li>
+                    <li>Đăng ký hoặc thanh toán một lần</li>
+                </ul>
+
+                @if (isPremiumAccount != null && (bool) isPremiumAccount == true )
+                {
+                    @* <button class="btn individual" style="background-color: gray; color: black;" type="submit">
+                        Mua Premium cao cấp
+                    </button> *@
+                    <button class="btn mini">Gói Premium hiện tại</button>
+                }
+                else
+                {
+                    <form asp-action="SendUpgradePremiumRequest" asp-controller="User" method="post" enctype="multipart/form-data">
+
+                        <button class="btn individual isPremiumAccount" type="submit">Mua Premium cao cấp</button>
+
+                    </form>
+                }
+
+                <div class="terms">Có áp dụng điều khoản.</div>
+                <div class="terms">Ưu đãi kết thúc vào ngày @expiredDate.Day tháng @expiredDate.Month, @expiredDate.Year</div>
+            </div>
+        </div>
+    </div>
+</div>

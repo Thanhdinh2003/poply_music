@@ -1,0 +1,44 @@
+﻿@model BasePagination<App.Domain.Entities.Media>;
+
+@{
+    ViewData["Title"] = "Collection";
+    var nextPageEnable = Model.Page == Model.TotalPage ? "disabled" : "";
+    var previousPageBtnEnable = Model.Page > 1 ? "" : "disabled";
+    var previousPageLink = $"/collection/index?page={Model.Page-1}";
+    var nextPageLink = $"/collection/index?page={Model.Page+1}";
+}
+
+<div class="col-10" style="margin-bottom: 44px; margin-top: 24px">
+
+<h3 style="text-align:center; color: white">Collection</h3>
+<div class="card-list-container d-flex justify-content-center">
+    @foreach (var item in Model.Items)
+    {
+        <partial name="./Common/Media/_musicCardTemplatePartial" model=@item />
+    }
+</div>
+
+<div class="d-flex justify-content-end">
+    <a href="@previousPageLink" class="page-link rounded-3 @previousPageBtnEnable">Previous</a>
+    <div class="page-link page-number rounded-3 text-black">@Model.Page</div>
+    <a href="@nextPageLink" class="page-link rounded-3 @nextPageEnable">Next</a>
+</div>
+</div>
+
+<style>
+    .page-link{
+        width: 120px;
+        text-align:center;
+    }
+
+    .page-number {
+        width: auto;
+        text-align: center;
+    }
+
+    a.disabled {
+        pointer-events: none;
+        cursor: default;
+        color: gray;
+    }
+</style>

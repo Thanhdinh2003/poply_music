@@ -1,0 +1,30 @@
+﻿@model App.Domain.Entities.Category
+@{
+    ViewData["Title"] = "Thêm mới thể loại";
+}
+
+<div class="col-10" style="margin-top: 44px; height: 50vh;min-height:53vh;">
+    <h3 style="color: white">
+        Thêm mới thể loại
+    </h3>
+
+    <form method="post" asp-action="add" asp-asp-controller="category">
+        <table class="table">
+            <tr>
+                <td style="text-align:center; align-content:center; color: white">
+                    Tên thể loại
+                </td>
+                <td>
+                    <input name="Name" type="text" value="@Model.Name" />
+                </td>
+            </tr>
+        </table>
+
+
+        <div class="d-flex flex-row-reverse">
+            <button style="width: 100px;" class="d-block rounded-3 btn btn-primary mx-1" type="submit">Lưu</button>
+            <a style="width: 100px;" class="d-block rounded-3 btn btn-danger mx-1" href="/category/index">Hủy</a>
+        </div>
+
+    </form>
+</div>

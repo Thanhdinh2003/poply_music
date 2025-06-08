@@ -1,0 +1,103 @@
+﻿@model App.Domain.Entities.User
+
+@{
+    ViewData["Title"] = "Thông tin tài khoản";
+    string gender = String.Empty;
+    switch (Model.Gender)
+    {
+        case 0:
+            gender = "Nam";
+            break;
+        case 1:
+            gender = "Nữ";
+            break;
+        case 2:
+            gender = "Khác";
+            break;
+    }
+}
+
+<div class="col-10" style="margin-bottom: 124px; margin-top: 24px">
+    <div class="profileCard d-flex mx-1 bg-white rounded-3 p-3 mb-4">
+        <div style="width: 20%;">
+            <img class="avatar hover-text bg-info rounded-circle mx-1" id="navbarDropdown" aria-expanded="false"
+                 data-bs-toggle="dropdown" style="max-width:300px; width: 205px; max-height:200px; border: 3px solid #9747FF;" src=@Model.AvatarUrl />
+        </div>
+        <dl class="row mx-4" style="background-color: white">
+            <dt class="col-sm-2">
+                Tên người dùng:
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Username)
+            </dd>
+            <dt class="col-sm-2">
+                Tên hiển thị:
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.DisplayName)
+            </dd>
+            <dt class="col-sm-2">
+                Giới tính
+            </dt>
+            <dd class="col-sm-10">
+                @gender
+            </dd>
+            <dt class="col-sm-2">
+                Ngày sinh:
+            </dt>
+            <dd class="col-sm-10">
+                @Model.Dob.ToString("dd/MM/yyyy")
+            </dd>
+            <dt class="col-sm-2">
+                Địa chỉ:
+            </dt>
+            <dd class="col-sm-10">
+                @Model.Address
+            </dd>
+            <dt class="col-sm-2">
+                Số điện thoại
+            </dt>
+            <dd class="col-sm-10">
+                @Model.PhoneNumber
+            </dd>
+            <dt class="col-sm-2">
+                Email:
+            </dt>
+            <dd class="col-sm-10">
+                @Model.Email
+            </dd>
+        </dl>
+        <div>
+            <a class="btn btn-warning" href="/User/Update?id=@Model.Id">
+                Sửa
+            </a>
+        </div>
+    </div>
+</div>
+
+
+
+
+@*<div class="profileCard d-flex mx-1 bg-white rounded-3 p-3 mb-4 justify-content-evenly">
+    <div style="width: 40%;border: 3px solid #9747FF;" class="rounded-3 p-2">
+        <div style="text-align: center;">BankType: MBBank</div>
+        <div style="text-align: center;">BankNumber: 1234345345</div>
+        <hr />
+        <div style="font-size: 25px;text-align: center">Số dư</div>
+        <div style="font-size: 30px;color:lawngreen;text-align: center">@Model.Balance vnđ</div>
+    </div>
+    <div class="justify-content-center d-flex justify-content-center" style="width: 10%;flex-direction:column;">
+        <a class="btn btn-success align-self-center" href="#" style="text-align:center;width:120px;">
+            Nạp tiền
+        </a>
+        <br />
+        <a class="btn btn-success align-self-center" href="#" style="text-align:center;width:120px;">
+            Xem lịch sử giao dịch
+        </a>
+    </div>
+    <div class="float-end mx-3" style="width:20%;">
+        <img class="rounded-3" style="max-width:200px; max-height:200px; border: 3px solid #9747FF;" st src='https://img.vietqr.io/image/vietinbank-113366668888-compact.jpg' />
+    </div>
+</div>
+
+*@

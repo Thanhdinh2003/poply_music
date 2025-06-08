@@ -1,0 +1,129 @@
+﻿@model mp3.mvc.Models.UserUpdateViewModel
+@{
+    ViewData["Title"] = "Chỉnh sửa người dùng - " + Model.Username;
+}
+
+<div class="col-10" style="margin-bottom: 44px; margin-top: 24px;min-height:53vh;">
+    <h3 style="color: white">
+        Chỉnh sửa thông tin người dùng - @Model.Username
+    </h3>
+
+    <form method="post" asp-action="UpdateConfirmation" asp-controller="user" enctype="multipart/form-data">
+        <input style="display: none;" name="Id" value="@Model.Id" />
+        <table class="table">
+            <tr>
+                <td style="color: white;">
+                    Tên người dùng
+                </td>
+                <td>
+                    <input asp-for="Username" class="form-control" value="@Model.Username" />
+                </td>
+            </tr>
+            <tr>
+                <td style="color: white;">
+                    Tên hiển thị
+                </td>
+                <td>
+                    <input asp-for="DisplayName" class="form-control" value="@Model.DisplayName" />
+                </td>
+            </tr>
+            <tr>
+                <td style="color: white;">
+                    Giới tính
+                </t>
+                <td>
+                    <select class="form-select custom-select" asp-for="Gender" aria-label="Default select example">
+                        @if (Model.Gender == 0)
+                        {
+                            <option selected value="0">Nam</option>
+                            <option value="1">Nữ</option>
+                            <option value="2">Khác</option>
+                        }
+                        else if (Model.Gender == 1)
+                        {
+                            <option value="0">Nam</option>
+                            <option selected value="1">Nữ</option>
+                            <option value="2">Khác</option>
+                        }
+                        else if (Model.Gender == 2)
+                        {
+                            <option value="0">Nam</option>
+                            <option value="1">Nữ</option>
+                            <option selected value="2">Khác</option>
+                        }
+
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td style="color: white;">
+                    Ngày sinh
+                </td>
+                <td>
+                    <input type="date" asp-for="Dob" class="form-control" value="@DateTime.Now.ToString("yyyy-MM-dd")" />
+                </td>
+            </tr>
+            <tr>
+                <td style="color: white;">
+                    Địa chỉ
+                </td>
+                <td>
+                    <input asp-for="Address" class="form-control" value="@Model.Address" />
+                </td>
+            </tr>
+            <tr>
+                <td style="color: white;">
+                    Email
+                </td>
+                <td>
+                    <input asp-for="Email" class="form-control" value="@Model.Email" />
+                </td>
+            </tr>
+            <tr>
+                <td style="color: white;">
+                    Số điện thoại
+                </td>
+                <td>
+                    <input asp-for="PhoneNumber" class="form-control" value="@Model.PhoneNumber" />
+                </td>
+            </tr>
+            <tr>
+                <td style="color: white;">
+                    Trạng thái
+                </td>
+                <td>
+                    <select class="form-select custom-select" asp-for="IsLocked" aria-label="Default select example">
+                        @if (Model.IsLocked)
+                        {
+                            <option selected value="True">Vô hiệu hóa</option>
+                            <option value="False">Hoạt động</option>
+                        }
+                        else
+                        {
+                            <option value="True">Vô hiệu hóa</option>
+                            <option selected value="False">Hoạt động</option>
+                        }
+
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td style="color: white;">
+                    Ảnh đại diện
+                </td>
+                <td>
+                    <input asp-for="Avatar" type="file" class="form-control" accept=".jpg, .png, .jepg" />
+                </td>
+            </tr>
+        </table>
+
+
+        <div class="d-flex flex-row-reverse">
+            <button style="width: 100px;" class="d-block rounded-3 btn btn-primary mx-1" type="submit">Lưu</button>
+            <a style="width: 100px;" class="d-block rounded-3 btn btn-danger mx-1" href="/user/manage">Hủy</a>
+        </div>
+
+    </form>
+
+</div>
+

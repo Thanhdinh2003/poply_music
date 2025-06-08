@@ -1,0 +1,108 @@
+﻿
+.container-fluid {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    color: black;
+    padding: 0;
+}
+
+.row {
+    width: 100%;
+}
+
+
+.right-div {
+    padding: 0;
+}
+/* Bài hát yêu thích và nghệ sĩ */
+.song-card{
+    padding-bottom: 12px
+}
+.song-card .card, .artist-card .card {
+    border: none;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+    .song-card .card:hover, .artist-card .card:hover {
+        transform: scale(1.05);
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+        cursor: pointer; 
+    }
+
+/* Định dạng văn bản trong thẻ card (bài hát và nghệ sĩ) */
+.song-card .card-text, .artist-card .card-text {
+    color: #b3b3b3; 
+    text-align: center; 
+    transition: color 0.3s; 
+}
+
+.song-card .card:hover .card-text, .artist-card .card:hover .card-text {
+    color: #1DB954; 
+}
+/* Danh sách nghệ sĩ */
+.artist-card .card {
+    border: none; 
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+    .artist-card .card:hover {
+        transform: scale(1.05); 
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); 
+        cursor: pointer; 
+    }
+
+/* Định dạng văn bản trong thẻ card (nghệ sĩ) */
+.artist-card .card-text {
+    color: #b3b3b3; 
+    text-align: center; 
+    transition: color 0.3s; 
+}
+
+.artist-card .card:hover .card-text {
+    color: #1DB954;
+}
+
+.mt-4 {
+    color: white;
+    font-family: 'Proxima Nova', Arial, sans-serif;
+    font-weight: bold;
+    margin-left: 18px;
+    margin-right: 45px;
+}
+
+.content-right{
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.right-all {
+    font-size: 16px;
+    background-color: white;
+    padding: 10px;
+    border-radius: 20px;
+}
+.right-music {
+    font-size: 16px;
+    color: white;
+}
+
+.right-all, .right-music {
+    padding: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s ease; /* Hiệu ứng chuyển đổi màu nền mượt */
+}
+
+    .right-all:hover, .right-music:hover {
+        color: #1DB954;
+    }
+
+.show-all-a{
+    cursor: pointer;
+}
+
+a:hover {
+    color: #1DB954;
+}

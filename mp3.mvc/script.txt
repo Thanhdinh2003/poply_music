@@ -1,0 +1,7 @@
+﻿Postgres:
+dotnet ef migrations add init --project ../App.PostgreSQL --startup-project . --context DatabaseContext
+dotnet ef database update --project ../App.PostgreSQL --startup-project . --context DatabaseContext
+
+SQlServer
+dotnet ef migrations add init --project ../App.SQLServer --startup-project . --context DatabaseContext
+dotnet ef database update --project ../App.SQLServer --startup-project . --context DatabaseContext
