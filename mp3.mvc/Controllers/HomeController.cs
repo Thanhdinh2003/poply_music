@@ -44,17 +44,8 @@ namespace mp3.mvc.Controllers
         public async Task<IActionResult> Index()
         {
             ViewData["HomePage"] = "text-dark";
-            /*ViewData["NewestList"] = await _databaseContext.Media
-                .Include(p => p.Author)
-                .Include(p => p.Category)
-                .Include(p => p.MediaContent)
-                .Include(p => p.MediaViewHistory)
-                .OrderByDescending(p => p.FavouriteCollections.Count)
-                .Take(10)
-                .IgnoreAutoIncludes()
-                .AsNoTracking()
-                .ToListAsync();
-*/
+
+            // tìm danh sách nhạc được đề xuất
             ViewData["NewestList"] = await _mediaRepository.GetSuggestedItemList(getUserId());
 
             ViewData["TrendingList"] = await _mediaRepository.GetTrendingItemList();
@@ -73,6 +64,7 @@ namespace mp3.mvc.Controllers
 
             return View();
         }
+
         //[Authorize]
         public async Task<IActionResult> Search(int type = 0, string searchText = "", int page = 1, int pageSize = 8)
         {

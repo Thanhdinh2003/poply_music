@@ -252,12 +252,18 @@ namespace mp3.mvc.Controllers
             return View(media);
         }
 
-
+        /// <summary>
+        /// tải nhạc lên
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<IActionResult> Add(MediaAddViewModel request)
         {
             var id = Guid.NewGuid();
-            var filePath = $"/media/audio/{id}.mp3";
+            var filePath = $"/media/audio/{id}.{request.ContentFile.FileName.Split(".").Last()}";
+            
+            // thêm nhạc vào cơ sở dữ liệu
             var mediaEntity = new Media
             {
                 Id = id,
@@ -268,16 +274,34 @@ namespace mp3.mvc.Controllers
                 CategoryId = request.CategoryId,
                 ContentUrl = filePath
             };
-            // Handle file uploads
+            await _databaseContext.AddAsync(mediaEntity);
+
+            // lưu file nhạc
             if (request.ContentFile != null)
             {
-                using (var stream = new FileStream("wwwroot" + filePath, FileMode.Create))
+                var fullFilePath = "wwwroot" + filePath;
+
+                using (var stream = new FileStream(fullFilePath, FileMode.Create))
                 {
                     await request.ContentFile.CopyToAsync(stream);
                 }
+
+                // kiểm tra chất lượng nhạc
+                using (var reader = new Mp3FileReader(fullFilePath))
+                {
+                    // lấy thông số bitrate
+                    var bitrate = reader.Mp3WaveFormat.AverageBytesPerSecond * 8 / 1000;
+
+                    // nếu bitrate nhỏ hơn 320 kb/s thì file không đạt chất lượng
+                    if (bitrate < 320)
+                    {
+                        _notyfService.Error("Thêm thất bại, tệp âm thanh không đủ tiêu chuẩn", 4);
+                        return RedirectToAction(nameof(Manage));
+                    }
+                }
             }
 
-            await _databaseContext.AddAsync(mediaEntity);
+            // thêm ảnh bìa cho nhạc
             foreach (var item in request.Avatar)
             {
                 var mediaContentId = Guid.NewGuid();
@@ -297,19 +321,6 @@ namespace mp3.mvc.Controllers
                 {
                     await item.CopyToAsync(stream);
                 }
-
-                // check bitrate
-                using (var reader = new Mp3FileReader(fullFilePath))
-                {
-                    var bitrate = reader.Mp3WaveFormat.AverageBytesPerSecond * 8 / 1000;
-
-                    if (bitrate < 128)
-                    {
-                        _notyfService.Error("Thêm thất bại, tệp âm thanh không đủ tiêu chuẩn", 2);
-                        return RedirectToAction(nameof(Manage));
-                    }
-                }
-
             }
 
             var changeCount = await _databaseContext.SaveChangesAsync();

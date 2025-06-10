@@ -36,7 +36,7 @@ else
     app.UseSwaggerUI(c =>
     {
         c.OAuthClientId("swagger");
-        c.SwaggerEndpoint("/swagger/v1/swagger.json", "MineMusic Api V1");
+        c.SwaggerEndpoint("/swagger/v1/swagger.json", "PoplyMusic Api V1");
     });
 }
 app.AddApplicationBuilderExtensions();

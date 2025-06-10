@@ -10,5 +10,6 @@ namespace App.Domain.Entities
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid Id { get; set; }
         public string? Name { get; set; }
+        public List<Media> Media { get; set; } = new List<Media>();
     }
 }
