@@ -1,7 +1,6 @@
 ﻿
 .right-div {
     padding: 20px;
-    margin-bottom: 70px;
 }
 
 .header {
@@ -84,6 +83,7 @@
     width: 40px;
     height: 40px;
     border-radius: 4px;
+    object-fit: cover;
 }
 
     .song-info p {
@@ -93,12 +93,12 @@
 
     .song-info .artist {
         font-size: 0.9rem;
-        color: #b3b3b3; /* Màu tên nghệ sĩ */
+        color: #ffffff; /* Màu tên nghệ sĩ */
     }
 
 .song-playcount, .song-album, .song-time {
     font-size: 0.9rem;
-    color: #b3b3b3; /* Màu thông tin album và thời gian */
+    color: #ffffff; /* Màu thông tin album và thời gian */
 }
 
 .song .fas.fa-play {

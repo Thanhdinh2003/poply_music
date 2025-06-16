@@ -1,4 +1,5 @@
 using mp3.mvc.Configurations;
+using mp3.mvc.Services;
 using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -20,6 +21,8 @@ builder.Configuration.SetBasePath(Directory.GetCurrentDirectory())
 
 // Add service collection extensions
 services.AddServiceCollectionExtensions(builder.Configuration, env);
+
+builder.Services.AddHostedService<CheckExipredPremiumService>();
 
 var app = builder.Build();
 

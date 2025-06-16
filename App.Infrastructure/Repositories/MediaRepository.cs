@@ -102,7 +102,7 @@ namespace App.Infrastructure.Repositories
 
         public async Task<List<Media>> GetSuggestedItemList(Guid userId, int pageSize = 8)
         {
-            // lấy danh sách ca sĩ mà người dùng đã xem nhiều nhất
+            // lấy danh sách category và author mà user đã xem nhiều nhất
             var topAuthors = await _context.MediaViewHistory
                 .Where(h => h.UserId == userId)
                 .GroupBy(h => h.Media.AuthorId)
@@ -111,7 +111,6 @@ namespace App.Infrastructure.Repositories
                 .Select(g => g.Key)
                 .ToListAsync();
 
-            // lấy danh sách thể loại mà người dùng đã xem nhiều nhất
             var topCategories = await _context.MediaViewHistory
                 .Where(h => h.UserId == userId)
                 .GroupBy(h => h.Media.CategoryId)
@@ -120,10 +119,14 @@ namespace App.Infrastructure.Repositories
                 .Select(g => g.Key)
                 .ToListAsync();
 
-            // đề xuất các media mới theo top ca sĩ hoặc thể loại (chưa xem)
+            // đề xuất các media mới theo top author hoặc category (chưa xem)
             var recommended = await _context.Media
+                .Include(p => p.Author)
+                .Include(p => p.MediaContent)
+                .Include(p => p.Category)
                 .Where(m => (topAuthors.Contains(m.AuthorId) || topCategories.Contains(m.CategoryId))
                     && !m.IsHidden && !m.IsLocked)
+                //.OrderBy(m => Guid.NewGuid()) // chậm với nhiều dữ liệu
                 .OrderBy(x => EF.Functions.Random())
                 .Take(10)
                 .ToListAsync();

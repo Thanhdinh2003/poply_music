@@ -6,14 +6,14 @@
             var item = Model[i];
             var index = i + 1;
 
-            <li class="song-item">
+            <li class="song-item position-relative">
                 <div class="song">
-                    <div class="song-info">
+                    <a class="song-info" href="/author/getdetail?id=@item.Id">
                         <span style="color: white; width: 20px;" >@index</span>
                        
                         <img src="@item.AvatarUrl"/>
-                    <span class="artist"> @item.Name</span>
-                    </div>
+                        <span class="artist"> @item.Name</span>
+                    </a>
                     <div class="song-album">
                         @item.NumberOfTracks
                     </div>

@@ -13,7 +13,7 @@
 <div class="col-10 right-div">
     <div class="container-fluid">
         <!-- Header Section -->
-        <div class="header">
+        <div class="header" style="margin-bottom: 16px">
 
             <div class="header-square">
                 <p>Top Bài Hát Việt Nam</p>
@@ -22,18 +22,24 @@
             <div class="header-info">
                 <h1>Top Bài hát yêu thích nhất</h1>
                 <h2>Bài hát được yêu thích hàng đầu tại Việt Nam</h2>
-                <p>Thông tin cập nhật hàng tuần về những bản nhạc được nghe yêu thích hiện nay tại Việt Nam.</p>
-                <p class="spotify">Poply Music • khoảng 3 giờ • 4 bản nhạc mới</p>
+                <p style="color: white">Thông tin cập nhật hàng tuần về những bản nhạc được nghe yêu thích hiện nay tại Việt Nam.</p>
+                <p style="color: black" class="spotify">Poply Music • khoảng 3 giờ • 4 bản nhạc mới</p>
             </div>
         </div>
 
+        <partial name="./Common/_backgroundImagePartial" model="@(new List<dynamic> { 
+        Url.Content("~/images/background/back4.jpg"),
+        Url.Content("~/images/background/back1.png"),
+        Url.Content("~/images/background/back4.jpg"),
+        Url.Content("~/images/background/back1.png")})" />
+
         <!-- Playlist Section -->
-        <div class="playlist">
+        <div class="playlist" style="position: relative">
             <div class="table-header">
-                <div class="col-title"># Tiêu đề</div>
-                <div class="col-playcount">Lượt phát</div>
-                <div class="col-album">Album</div>
-                <div class="col-time"><i class="far fa-clock"></i></div>
+                <div class="col-title" style="color: #ffffff"># Tiêu đề</div>
+                <div class="col-playcount" style="color: #ffffff">Lượt phát</div>
+                <div class="col-album" style="color: #ffffff">Album</div>
+                <div class="col-time" style="color: #ffffff"><i class="far fa-clock"></i></div>
             </div>
 
             <!-- Songs -->

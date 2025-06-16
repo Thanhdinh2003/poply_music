@@ -9,7 +9,6 @@ using Microsoft.EntityFrameworkCore;
 using mp3.mvc.Consts;
 using mp3.mvc.Models;
 using NAudio.Wave;
-using System.IO;
 using System.Security.Claims;
 
 namespace mp3.mvc.Controllers
@@ -61,6 +60,7 @@ namespace mp3.mvc.Controllers
             var query = _databaseContext.Media
                 .Include(p => p.Category)
                 .Include(p => p.Author)
+                .Include(p => p.User)
                 .Include(p => p.MediaContent).AsQueryable();
 
             if (!string.IsNullOrWhiteSpace(searchText))
@@ -135,7 +135,7 @@ namespace mp3.mvc.Controllers
                 ViewBag.isFavouriteMedia = await _databaseContext.FavouriteCollections.AnyAsync(p => p.MediaId == id && p.UserId == getUserId());
             }
 
-            ViewData["TrendingList"] = await _mediaRepository.GetTrendingItemList();
+            ViewData["TrendingList"] = await _mediaRepository.GetSuggestedItemList(getUserId(), 4);
             ViewData["IsPremiumAccount"] = await _databaseContext.Users.Where(p => p.Id == getUserId()).Select(p => p.IsPremiumAccount).FirstOrDefaultAsync();
 
             return View(music);
@@ -252,18 +252,12 @@ namespace mp3.mvc.Controllers
             return View(media);
         }
 
-        /// <summary>
-        /// tải nhạc lên
-        /// </summary>
-        /// <param name="request"></param>
-        /// <returns></returns>
+
         [HttpPost]
         public async Task<IActionResult> Add(MediaAddViewModel request)
         {
             var id = Guid.NewGuid();
-            var filePath = $"/media/audio/{id}.{request.ContentFile.FileName.Split(".").Last()}";
-            
-            // thêm nhạc vào cơ sở dữ liệu
+            var filePath = $"/media/audio/{id}.mp3";
             var mediaEntity = new Media
             {
                 Id = id,
@@ -274,34 +268,16 @@ namespace mp3.mvc.Controllers
                 CategoryId = request.CategoryId,
                 ContentUrl = filePath
             };
-            await _databaseContext.AddAsync(mediaEntity);
-
-            // lưu file nhạc
+            // Handle file uploads
             if (request.ContentFile != null)
             {
-                var fullFilePath = "wwwroot" + filePath;
-
-                using (var stream = new FileStream(fullFilePath, FileMode.Create))
+                using (var stream = new FileStream("wwwroot" + filePath, FileMode.Create))
                 {
                     await request.ContentFile.CopyToAsync(stream);
                 }
-
-                // kiểm tra chất lượng nhạc
-                using (var reader = new Mp3FileReader(fullFilePath))
-                {
-                    // lấy thông số bitrate
-                    var bitrate = reader.Mp3WaveFormat.AverageBytesPerSecond * 8 / 1000;
-
-                    // nếu bitrate nhỏ hơn 320 kb/s thì file không đạt chất lượng
-                    if (bitrate < 320)
-                    {
-                        _notyfService.Error("Thêm thất bại, tệp âm thanh không đủ tiêu chuẩn", 4);
-                        return RedirectToAction(nameof(Manage));
-                    }
-                }
             }
 
-            // thêm ảnh bìa cho nhạc
+            await _databaseContext.AddAsync(mediaEntity);
             foreach (var item in request.Avatar)
             {
                 var mediaContentId = Guid.NewGuid();
@@ -321,16 +297,47 @@ namespace mp3.mvc.Controllers
                 {
                     await item.CopyToAsync(stream);
                 }
+
+                // check bitrate
+                using (var reader = new Mp3FileReader(fullFilePath))
+                {
+                    var bitrate = reader.Mp3WaveFormat.AverageBytesPerSecond * 8 / 1000;
+
+                    if (bitrate < 320)
+                    {
+                        _notyfService.Error("Thêm thất bại, tệp âm thanh không đủ tiêu chuẩn", 2);
+                        return RedirectToAction(nameof(Manage));
+                    }
+                }
             }
 
             var changeCount = await _databaseContext.SaveChangesAsync();
 
+            var isPremium = HttpContext.User.Claims.FirstOrDefault(p => p.Type == "role").ToString() == "Premium";
+
+            if (isPremium)
+            {
+                if (changeCount > 0)
+                {
+                    _notyfService.Success("Thêm thành công", 2);
+                }
+                else
+                {
+                    _notyfService.Error("Thêm thất bại", 2);
+                }
+
+                return RedirectToAction(nameof(PersonalMediaList));
+            }
+                
             if (changeCount > 0)
             {
                 _notyfService.Success("Thêm thành công", 2);
-                return RedirectToAction(nameof(Manage));
             }
-            _notyfService.Error("Thêm thất bại", 2);
+            else
+            {
+                _notyfService.Error("Thêm thất bại", 2);
+            }
+            
             return RedirectToAction(nameof(Manage));
         }
 
@@ -497,5 +504,36 @@ namespace mp3.mvc.Controllers
 
             return View();
         }
+
+        [HttpGet]
+        [Authorize]
+        public async Task<IActionResult> PersonalMediaList(string searchText = "", int page = 1, int pageSize = 10)
+        {
+            var userId = getUserId();
+            var query = _databaseContext.Media
+                .Include(p => p.Category)
+                .Include(p => p.Author)
+                .Include(p => p.MediaContent)
+                .Where(p => p.UserId == userId)
+                .AsQueryable();
+
+            if (!string.IsNullOrWhiteSpace(searchText))
+            {
+                query = query.Where(p => p.Name.ToLower().Contains(searchText.Trim().ToLower()));
+            }
+
+            var total = await query.CountAsync();
+
+            var items = await query
+            .OrderByDescending(p => p.UpdatedAt)
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize)
+            .ToListAsync();
+            ViewData["searchText"] = searchText;
+            ViewBag.Data = new BasePagination<Media>(total, page, pageSize, items);
+
+            return View();
+        }
+
     }
 }

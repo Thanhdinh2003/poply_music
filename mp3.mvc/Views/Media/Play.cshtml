@@ -14,9 +14,16 @@
     <link rel="stylesheet" href="~/css/MusicDetails.css" asp-append-version="true" />
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
 </head>
-
+<style>
+    .fa-solid, .fas {
+        font-size: 20px;
+    }
+</style>
 <div class="col-10 right-div">
-    <div class="music-detail-container">
+    <partial name="./Common/_backgroundImagePartial" model="@(new List<dynamic> {
+        Url.Content("~/images/background/back5.jpg")})" />
+
+    <div class="music-detail-container position-relative">
         <div class="album-cover">
             <partial name="./Common/Media/_musicAvatarPreviewPartial" model="@Model.MediaContent" />
 
@@ -85,7 +92,7 @@
     </div>
 
     <!-- Đề xuất cho bạn -->
-    <div class="d-flex justify-content-between align-items-center mt-4">
+    <div class="d-flex justify-content-between align-items-center mt-4 ps-3 position-relative">
         <h4 class="mb-0">Đề xuất cho bạn</h4>
     </div>
     <div class="row favorite-songs">

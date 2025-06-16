@@ -70,6 +70,10 @@ namespace mp3.mvc.Controllers
                 {
                     claims.Add(new Claim("role", "admin"));
                 }
+                else if (user.IsPremiumAccount)
+                {
+                    claims.Add(new Claim("role", "premium"));
+                }
                 else
                 {
                     claims.Add(new Claim("role", "user"));

@@ -10,7 +10,7 @@
     ViewData["Title"] = isAdminRole ? "Quản trị thể loại" : "Danh sách thể loại";
 }
 
-<div class="col-10" style="margin-bottom: 44px; margin-top: 24px;min-height:53vh;">
+<div class="col-10">
 
     <div class="content-container">
         <h3 style="text-align:center; color: white">Danh sách thể loại</h3>
@@ -51,9 +51,9 @@
                         @if (isAdminRole)
                         {
                             <td class="d-flex">
-                                <a class="d-block rounded-3 btn btn-primary mx-1" href="/category/getdetail?id=@item.Id">Xem</a>
-                                <a class="d-block rounded-3 btn btn-warning mx-1" href="/category/getdetail?id=@item.Id">Sửa</a>
-                                <a class="d-block rounded-3 btn btn-danger mx-1" href="/category/getdetail?id=@item.Id">Xóa</a>
+                                <a class="d-block rounded-3 btn btn-primary mx-1" style="width: 120px" href="/category/getdetail?id=@item.Id">Xem</a>
+                                <a class="d-block rounded-3 btn btn-warning mx-1" style="width: 120px" href="/category/getdetail?id=@item.Id">Sửa</a>
+                                <a class="d-block rounded-3 btn btn-danger mx-1" style="width: 120px" href="/category/getdetail?id=@item.Id">Xóa</a>
                             </td>
                         }
                     </tr>

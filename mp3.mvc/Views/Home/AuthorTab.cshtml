@@ -26,8 +26,11 @@
         </div>
     </div>
 
+    <partial name="./Common/_backgroundImagePartial" model="@(new List<dynamic> {
+        Url.Content("~/images/background/back3.jpg") })" />
+
     <!-- Nghệ Sĩ Yêu Thích -->
-    <div class="d-flex justify-content-between align-items-center mt-4">
+    <div class="d-flex justify-content-between align-items-center mt-4 position-relative">
         <h4 class="mb-0">Nghệ sĩ yêu thích</h4>
         <div class="show-all">
             <a class="show-all" href="/Home/ListArtist">Hiển tất cả</a>
@@ -40,7 +43,7 @@
     </div>
 
     <!-- Nghệ Sĩ Mới ra mắt -->
-    <div class="d-flex justify-content-between align-items-center mt-4">
+    <div class="d-flex justify-content-between align-items-center mt-4 position-relative">
         <h4 class="mb-0">Nghệ sĩ mới ra mắt</h4>
         <div class="show-all">
             <a class="show-all" href="/Home/ListArtist">Hiển tất cả</a>

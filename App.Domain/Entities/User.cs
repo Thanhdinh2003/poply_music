@@ -19,5 +19,7 @@ namespace App.Domain.Entities
         public string? Password { get; set; }
 
         public bool IsPremiumAccount { get; set; } = false;
+
+        public List<PremiumUpgradeRequest> PremiumUpgradeRequests { get; set; } = new List<PremiumUpgradeRequest>();
     }
 }

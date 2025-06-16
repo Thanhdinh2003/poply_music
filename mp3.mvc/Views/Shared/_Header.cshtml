@@ -46,7 +46,7 @@
 
                 </ul>
                 <form class="d-flex hover-text" asp-controller="home" asp-action="searchAction" method="post">
-                    <input name="searchText" class="form-control me-2" type="search" placeholder="Tên bài hát, ca sĩ,..." aria-label="Search">
+                    <input name="searchText" class="form-control me-2 mt-0" type="search" placeholder="Tên bài hát, ca sĩ,..." aria-label="Search">
                     <button class="btn search-btn text-light" href="#" type="submit">Tìm</button>
                 </form>
 @*                 @{
@@ -54,7 +54,7 @@
                     { *@
                         <div class="d-flex justify-content-center dropdown" style="padding-left: 100px;">
                             <img class="avatar hover-text bg-info rounded-circle mx-1" id="navbarDropdown" aria-expanded="false"
-                                 data-bs-toggle="dropdown" style="max-width:40px; max-height:40px;" />
+                                 data-bs-toggle="dropdown" style="max-width:40px; max-height:40px; object-fit:contain" />
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                                 <li><a class="dropdown-item" href="/user/getDetailProfile?id=">Thông tin tài khoản</a></li>
                                 <li><a class="dropdown-item" href="/media/history">Lịch sử nghe</a></li>

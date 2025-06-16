@@ -19,6 +19,7 @@
         var avatarClaim = User.Claims.FirstOrDefault(p => p.Type == "avatarUrl");
         var avatarUrl = avatarClaim != null ? avatarClaim.Value : "/images/avatars/empty.jpg";
         var isAdminRole = roleClaim != null && roleClaim.Value == "admin";
+        var isPremiumAccount = roleClaim != null && roleClaim.Value == "premium";
         var isAuthen = User != null && User.Identity != null && User.Identity.IsAuthenticated;
         var userId = User?.Claims.FirstOrDefault(p => p.Type == ClaimTypes.NameIdentifier)?.Value;
     }
@@ -28,36 +29,41 @@
             <div class="Homeinterface-Banner-Logo">
                 <p class="Homeinterface-Banner-Logo-P">
                     <a href="/Home/Index">
-                        <img src="~/images/logo.png">
+                       <img src="~/images/logo.png" />
                     </a>
                 </p>
             </div>
             <div class="Homeinterface-Header-Seach" id="menu">
                 <button class="homes-buttons">
-                    <a href="/Home/Index" style="color: black">
-                        <i class="fas fa-home"></i>
+                    <a href="/Home/Index">
+                        <i class="fa-solid fa-house" style="font-size: 20px;color: #ffffff;"></i>
                     </a>
                 </button>
                 <div class="Banner_Seach_Text">
                     <form class="d-flex hover-text" asp-controller="home" asp-action="searchAction" method="post">
-                        <input name="searchText" class="form-control me-2" type="search" placeholder="Tên bài hát, ca sĩ,..." aria-label="Search">
+                        <input name="searchText" class="form-control me-2 mt-0" type="search" placeholder="Tên bài hát, ca sĩ,..." aria-label="Search">
                     </form>
                 </div>
             </div>
             <div class="Homeinterface-Banner-Icon">
 
-                <div class="Icon-blocl">
+                <div class="Icon-blocl rounded-2">
+                    @if (!isAdminRole)
+                    {
+                        <p class="premium">
+                            <a style="color: black; font-weight:700;" href="/Media/Premium">Khám phá Premium</a>
+                        </p>
+                    }
                     <p class="premium">
-                        <a style="color: black;font-weight:700;" href="/Media/Premium">Khám phá Premium</a>
+                        <a href="#" class="premiums rounded-2" style="color: black; font-weight:700;">Cài đặt ứng dụng</a>
                     </p>
-                    <a href="#" class="premiums" style="color:white;">Cài đặt ứng dụng</a>
                 </div>
 
                 <div class="block-action">
 
-                    <div class="Homeinterface-Banner-Icon-Bell">
-                        <a href="#" title="Thông báo">
-                            <i class="fa-solid fa-bell" style="color: #ffffff; font-size: 24px"></i>
+                    <div class="Homeinterface-Banner-Icon-Bell text-center">
+                        <a href="#" title="Thông báo" style="width: 60px;">
+                            <i class="fa-solid fa-bell" style="color: #FFFFFF; font-size: 20px;"></i>
                         </a>
                     </div>
                     <div class="Homeinterface-Banner-Icon-User">
@@ -66,10 +72,16 @@
                             if (isAuthen)
                             {
                                 <div class="d-flex justify-content-center dropdown">
-                                    <img class="avatar hover-text bg-info rounded-circle mx-1" id="navbarDropdown" aria-expanded="false" data-bs-toggle="dropdown" style="width: 40px; max-height:40px;" src="@avatarUrl" />
+                                    <img class="avatar hover-text bg-info rounded-circle mx-1" id="navbarDropdown" aria-expanded="false" data-bs-toggle="dropdown" style="width: 40px; max-height:40px; object-fit: cover" src="@avatarUrl" />
                                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                                         <li><a class="dropdown-item" href="/user/getDetailProfile?id=@userId">Thông tin tài khoản</a></li>
                                         <li><a class="dropdown-item" href="/media/history">Lịch sử nghe</a></li>
+
+                                        @if(!isAdminRole && isPremiumAccount)
+                                        {
+                                            <li><a class="dropdown-item" href="/Media/PersonalMediaList">Kho nhạc cá nhân</a></li>
+                                        }
+
                                         <li><hr class="dropdown-divider"></li>
                                         <li><a class="dropdown-item" href="/user/logout">Đăng xuất</a></li>
                                     </ul>
@@ -78,7 +90,7 @@
                             else
                             {
 
-                                <li class="nav-item">
+                                <div class="nav-item">
                                     <a class="nav-link" href="#">
                                         <i class="fa-solid fa-user-gear" style="color: #ffffff; font-size: 24px"></i>
                                     </a>
@@ -86,7 +98,7 @@
                                         <li><a class="dropdown-item" href="/User/Login">Đăng nhập</a></li>
                                         <li><a class="dropdown-item" href="/User/Register">Đăng ký</a></li>
                                     </ul>
-                                </li>
+                                </div>
                             }
                         }
 
@@ -160,16 +172,16 @@
                     <!-- HTML Structure -->
                     <div class="social">
                         <a href="https://www.facebook.com" target="_blank" aria-label="Facebook">
-                            <img src="/images/icons/facebook.png" width="24px">
+                            <img src="/images/icons/facebook.png" width="24">
                         </a>
                         <a href="https://www.instagram.com" target="_blank" aria-label="Instagram">
-                            <img src="/images/icons/instagram.png" width="24px">
+                            <img src="/images/icons/instagram.png" width="24">
                         </a>
                         <a href="https://www.youtube.com" target="_blank" aria-label="YouTube">
-                            <img src="/images/icons/youtube.png" width="24px">
+                            <img src="/images/icons/youtube.png" width="24">
                         </a>
                         <a href="https://www.tiktok.com" target="_blank" aria-label="TikTok">
-                            <img src="/images/icons/tiktok.png" width="24px">
+                            <img src="/images/icons/tiktok.png" width="24">
                         </a>
                     </div>
 

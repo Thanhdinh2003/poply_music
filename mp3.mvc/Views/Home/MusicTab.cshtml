@@ -14,7 +14,7 @@
 </head>
 
 <!-- Khối phải (chiếm 8 cột) -->
-<div class="col-10 right-div">
+<div class="col-10 right-div overflow-hidden">
 
     <div class="content-right">
         <div class="right-music">
@@ -28,8 +28,11 @@
         </div>
     </div>
 
+    <partial name="./Common/_backgroundImagePartial" model="@(new List<dynamic> {
+        Url.Content("~/images/background/back2.png") })" />
+
     <!-- Đề xuất cho bạn -->
-    <div class="d-flex justify-content-between align-items-center mt-4">
+    <div class="d-flex justify-content-between align-items-center mt-4 position-relative">
         <h4 class="mb-0">Đề xuất cho bạn</h4>
         <div class="show-all">
             <a class="show-all" href="/Home/ListMusic">Hiển tất cả</a>
@@ -42,7 +45,7 @@
     </div>
 
     <!-- Ca khúc mới ra mắt -->
-    <div class="d-flex justify-content-between align-items-center mt-4">
+    <div class="d-flex justify-content-between align-items-center mt-4 position-relative">
         <h4 class="mb-0 " style=" color: white">Ca khúc mới ra mắt</h4>
         <div class="show-all">
             <a class="show-all" href="/Home/ListMusic">Hiển tất cả</a>

@@ -21,18 +21,18 @@
                             <i class="fa-solid fa-pause" id="pauseBtn" style="display: none;"></i>
                         </button>
                         <img src="@content?.Value" alt="Bìa album của @item.Name" />
-                        <a class="song-info-p" href="/media/play?id=@item.Id">
+                        <a class="song-info-p" href="/media/play?id=@item.Id" style="color: #ffffff">
                             @item.Name <br />
-                            <span class="artist">@item.Author?.Name</span>
+                            <span class="artist" style="color: #ffffff">@item.Author?.Name</span>
                         </a>
                     </div>
-                    <div class="song-playcount">
+                    <div class="song-playcount" style="color: #ffffff">
                         @item.MediaViewHistory?.Count
                     </div>
-                    <div class="song-album">
+                    <div class="song-album" style="color: #ffffff">
                         @item.Category?.Name
                     </div>
-                    <div class="song-time">
+                    <div class="song-time" style="color: #ffffff">
                         3:45
                     </div>
                 </div>

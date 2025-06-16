@@ -10,10 +10,10 @@
     ViewData["SelectCollection"] = "active";
 }
 
-<div class="col-10 right-div" style="margin-top: 24px;">
+<div class="col-10 right-div">
     <h3 style="text-align:center; color: white">Bài hát được yêu thích</h3>
     <!-- Create a row for responsive cards per row -->
-    <div class="card-list-container row d-flex g-3" style="justify-content: flex-start;">
+    <div class="card-list-container row d-flex g-3" style=" justify-content:normal">
         @foreach (var (item, index) in Model.Items.Select((x, i) => (x, i)))
         {
             if(index >= 5)
@@ -27,7 +27,7 @@
         }
     </div>
 
-    <div class="card-list-container row d-flex g-3" style="justify-content: flex-start;">
+    <div class="card-list-container row d-flex g-3">
         @foreach (var (item, index) in Model.Items.Select((x, i) => (x, i)))
         {
             if (index < 5)

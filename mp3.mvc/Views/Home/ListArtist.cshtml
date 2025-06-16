@@ -13,7 +13,7 @@
 <div class="col-10 right-div">
     <div class="container-fluid">
         <!-- Header Section -->
-        <div class="header">
+        <div class="header" style="margin-bottom: 16px">
 
             <div class="header-square">
                 <p>Top Nghệ sĩ Việt Nam</p>
@@ -22,17 +22,20 @@
             <div class="header-info">
                 <h1>Top Nghệ sĩ Việt Nam</h1>
                 <h2>Nghệ sĩ hàng đầu tại Việt Nam</h2>
-                <p>Thông tin cập nhật hàng tuần về những nghệ sĩ được nghe nhiều nhất hiện nay tại Việt Nam.</p>
-                <p class="spotify">Poply Music • 23,615 lượt lưu • khoảng 3 giờ • 4 bản nhạc mới</p>
+                <p style="color: white">Thông tin cập nhật hàng tuần về những nghệ sĩ được nghe nhiều nhất hiện nay tại Việt Nam.</p>
+                <pclass="spotify">Poply Music • 23,615 lượt lưu • khoảng 3 giờ • 4 bản nhạc mới</p>
             </div>
         </div>
 
+        <partial name="./Common/_backgroundImagePartial" model="@(new List<dynamic> { 
+            Url.Content("~/images/background/back4.jpg")})" />
+
         <!-- Playlist Section -->
-        <div class="playlist">
+        <div class="playlist" style="position: relative">
             <div class="table-header">
-                <div class="col-title"># Nghệ sĩ</div>
-                <div class="col-album">Số ca khúc đã phát hành</div>
-                <div class="col-album">Số lượt phát</div>
+                <div class="col-title" style="color: #ffffff"># Nghệ sĩ</div>
+                <div class="col-album" style="color: #ffffff">Số ca khúc đã phát hành</div>
+                <div class="col-album" style="color: #ffffff">Số lượt phát</div>
             </div>
 
             <!-- Songs -->

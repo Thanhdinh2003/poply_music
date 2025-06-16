@@ -13,7 +13,7 @@
 <div class="col-10 right-div">
     <div class="container-fluid">
         <!-- Header Section -->
-        <div class="header">
+        <div class="header" style="margin-bottom: 16px">
 
             <div class="header-square">
                 <p>Top Bài Hát Việt Nam</p>
@@ -27,13 +27,20 @@
             </div>
         </div>
 
+        <partial name="./Common/_backgroundImagePartial" model="@(new List<dynamic> { 
+        Url.Content("~/images/background/back4.jpg"),
+        Url.Content("~/images/background/back1.png"),
+        Url.Content("~/images/background/back4.jpg"),
+        Url.Content("~/images/background/back1.png"),
+        Url.Content("~/images/background/back4.jpg")})" />
+
         <!-- Playlist Section -->
-        <div class="playlist">
+        <div class="playlist" style="position: relative">
             <div class="table-header">
-                <div class="col-title"># Tiêu đề</div>
-                <div class="col-playcount">Lượt phát</div>
-                <div class="col-album">Album</div>
-                <div class="col-time"><i class="far fa-clock"></i></div>
+                <div class="col-title" style="color: #ffffff"># Tiêu đề</div>
+                <div class="col-playcount" style="color: #ffffff">Lượt phát</div>
+                <div class="col-album" style="color: #ffffff">Album</div>
+                <div class="col-time" style="color: #ffffff"><i class="far fa-clock"></i></div>
             </div>
 
             <!-- Songs -->

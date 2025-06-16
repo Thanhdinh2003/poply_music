@@ -10,15 +10,15 @@
     ViewData["Title"] = isAdminRole ? "Quản trị tài khoản Premium" : "Danh sách tài khoản Premium";
 }
 
-<div class="col-10" style="margin-bottom: 44px; margin-top: 24px;min-height:53vh;">
+<div class="col-10">
     <div class="content-container">
-        <h3 style="text-align:center; color: white">Danh sách tài khoản yêu cầu</h3>
+        <h3 class="m-0" style="text-align:center; color: white">Danh sách tài khoản yêu cầu</h3>
         <table class="table" style="background-color: white; border-radius: 4px;">
             <thead>
                 <tr>
                     <th scope="col">Số thứ tự</th>
-                    <th scope="col">Tên đăng nhập</th>
                     <th scope="col">Tên hiểu thị</th>
+                    <th scope="col">Tên đăng nhập</th>
                     <th scope="col">Trạng thái phê duyệt</th>
                 </tr>
             </thead>
@@ -33,13 +33,17 @@
                             @index
                         </td>
                         <td>
-                            @item.User.Username
+                            <partial name="./Common/User/_userAvatarPartial" model=@item.User />
                         </td>
                         <td>
-                            @item.User.DisplayName
+                            @item.User.Username
                         </td>
                         <td class="d-flex">
-                            @if (item.IsAccepted)
+                            @if (item.CreatedAt < DateTime.UtcNow.AddMonths(-3))
+                            {
+                                <a class="d-block rounded-3 btn btn-secondary mx-1">Đã hết hạn</a>
+                            }
+                            else if (item.IsAccepted)
                             {
                                 <a class="d-block rounded-3 btn btn-danger mx-1">Đã phê duyệt</a>
                             }

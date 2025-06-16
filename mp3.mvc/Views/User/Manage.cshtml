@@ -10,21 +10,21 @@
     ViewData["Title"] = isAdminRole ? "Quản trị người dùng" : "Danh sách người dùng";
 }
 
-<div class="col-10" style="margin-bottom: 44px; margin-top: 24px;min-height:53vh;">
+<div class="col-10">
     <div class="content-container">
-        <h3 style="text-align:center; color: white">Danh sách người dùng</h3>
+        <h3 class="m-0" style="text-align:center; color: white">Danh sách người dùng</h3>
         @if (isAdminRole)
         {
             <div class="d-flex flex-row-reverse">
-                <a style="width: 100px; margin-bottom: 12px;" class="d-block rounded-3 btn btn-success mx-1" href="/media/add">Thêm</a>
+                <a style="width: 100px; margin: 12px;" class="d-block rounded-3 btn btn-success mx-1" href="/media/add">Thêm</a>
             </div>
         }
         <table class="table" style="background-color: white; border-radius: 4px;">
             <thead>
                 <tr>
                     <th scope="col">Số thứ tự</th>
+                    <th scope="col">Tên hiển thị</th>
                     <th scope="col">Tên đăng nhập</th>
-                    <th scope="col">Tên hiểu thị</th>
                     <th scope="col">Email</th>
                     <th scope="col">Ngày tạo</th>
                     <th scope="col">Trạng thái</th>
@@ -42,10 +42,10 @@
                             @index
                         </td>
                         <td>
-                            @item.Username
+                            <partial name="./Common/User/_userAvatarPartial" model=@item />
                         </td>
                         <td>
-                            @item.DisplayName
+                            @item.Username
                         </td>
                         <td>
                             @item.Email
@@ -67,17 +67,19 @@
                                 </div>
                             }
                         </td>
-                        <td class="d-flex">
-                            <a class="d-block rounded-3 btn btn-primary mx-1" href="/user/getdetailProfile?id=@item.Id">Xem</a>
-                            <a class="d-block rounded-3 btn btn-warning mx-1" href="/user/update?id=@item.Id">Sửa</a>
-                            @if (!item.IsLocked)
-                            {
-                                <a class="d-block rounded-3 btn btn-danger mx-1" href="/user/deactivate?id=@item.Id">Vô hiệu hóa</a>
-                            }
-                            else
-                            {
-                                <a class="d-block rounded-3 btn btn-success mx-1" href="/user/activate?id=@item.Id">Khôi phục</a>
-                            }
+                        <td>
+                            <div class="d-flex align-items-center">
+                                <a class="d-block rounded-3 btn btn-primary mx-1" style="width: 120px" href="/user/getdetailProfile?id=@item.Id">Xem</a>
+                                <a class="d-block rounded-3 btn btn-warning mx-1" style="width: 120px" href="/user/update?id=@item.Id">Sửa</a>
+                                @if (!item.IsLocked)
+                                {
+                                    <a class="d-block rounded-3 btn btn-danger mx-1" style="width: 120px" href="/user/deactivate?id=@item.Id">Vô hiệu hóa</a>
+                                }
+                                else
+                                {
+                                    <a class="d-block rounded-3 btn btn-success mx-1" style="width: 120px" href="/user/activate?id=@item.Id">Khôi phục</a>
+                                }
+                            </div>
                         </td>
                     </tr>
                 }
@@ -96,6 +98,8 @@
 
     </div>
 </div>
+
+
 <style>
     .page-link {
         width: 120px;
