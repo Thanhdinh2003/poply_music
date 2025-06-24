@@ -130,6 +130,7 @@ namespace mp3.mvc.Controllers
                 var newUser = new User
                 {
                     Username = model.username,
+                    Email = model.email,
                     DisplayName = model.displayName,
                     AvatarUrl = "/images/avatars/empty.jpg",
                     Password = TokenHelper.md5_hash(model.password!),

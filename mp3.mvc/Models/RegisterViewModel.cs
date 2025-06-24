@@ -13,6 +13,9 @@ namespace mp3.mvc.Models
         [DisplayName("Tên hiển thị")]
         [Required(ErrorMessage = "{0} không được trống.")]
         public string displayName { get; set; } = "";
+        [StringLength(50)]
+        [DisplayName("Email")]
+        public string email { get; set; } = "";
         public int gender { get; set; } = 0;
         public DateTime dob { get; set; }
         [DisplayName("Địa chỉ")]

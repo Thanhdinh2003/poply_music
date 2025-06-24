@@ -18,7 +18,10 @@ namespace App.Infrastructure.Repositories
 
         public async Task<User> Login(string username, string password)
         {
-            var userLogin = await _context.Users.FirstOrDefaultAsync(p => p.Username == username.Trim() && p.Password == password);
+            var userLogin = await _context.Users
+                .Where(p => p.Username == username.Trim() || p.Email == username.Trim())
+                .Where(p => p.Password == password)
+                .FirstOrDefaultAsync();
             if (userLogin == null)
             {
                 _logger.LogError($"user with username = ${username} login failed.");
