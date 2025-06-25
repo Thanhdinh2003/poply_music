@@ -271,9 +271,22 @@ namespace mp3.mvc.Controllers
             // Handle file uploads
             if (request.ContentFile != null)
             {
-                using (var stream = new FileStream("wwwroot" + filePath, FileMode.Create))
+                var temp = "wwwroot" + filePath;
+                using (var stream = new FileStream(temp, FileMode.Create))
                 {
                     await request.ContentFile.CopyToAsync(stream);
+                }
+
+                // check bitrate
+                using (var reader = new Mp3FileReader(temp))
+                {
+                    var bitrate = reader.Mp3WaveFormat.AverageBytesPerSecond * 8 / 1000;
+
+                    if (bitrate < 320)
+                    {
+                        _notyfService.Error("Thêm thất bại, tệp âm thanh không đủ tiêu chuẩn", 2);
+                        return RedirectToAction(nameof(Manage));
+                    }
                 }
             }
 
@@ -296,18 +309,6 @@ namespace mp3.mvc.Controllers
                 using (var stream = new FileStream("wwwroot" + fileContentPath, FileMode.Create))
                 {
                     await item.CopyToAsync(stream);
-                }
-
-                // check bitrate
-                using (var reader = new Mp3FileReader(fullFilePath))
-                {
-                    var bitrate = reader.Mp3WaveFormat.AverageBytesPerSecond * 8 / 1000;
-
-                    if (bitrate < 320)
-                    {
-                        _notyfService.Error("Thêm thất bại, tệp âm thanh không đủ tiêu chuẩn", 2);
-                        return RedirectToAction(nameof(Manage));
-                    }
                 }
             }
 

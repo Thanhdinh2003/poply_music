@@ -1,5 +1,5 @@
 ﻿@{
-    var name = Model.Name == "anonymous" ? Model.Name : "Ẩn danh";
+    var name = Model.Name == "anonymous" ? "Ẩn danh":  Model.Name;
 }
 <div class="d-flex align-items-center">
     <a href="/author/getdetail?id=@Model.Id">

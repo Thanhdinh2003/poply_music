@@ -391,5 +391,23 @@ namespace mp3.mvc.Controllers
 
             return RedirectToAction("GetListUpgradePremiumRequest");
         }
+
+        // hủy phê duyệt yêu cầu
+        // hủy phê duyệt xong quay về màn xem danh sách
+        public async Task<IActionResult> CancelRequest(Guid id)
+        {
+            var upgradeRequest = await _databaseContext.PremiumUpgradeRequests.Where(p => p.Id == id).FirstOrDefaultAsync();
+
+            upgradeRequest.IsAccepted = false;
+
+            var user = await _databaseContext.Users.FirstOrDefaultAsync(p => p.Id == upgradeRequest.UserId);
+            user.IsPremiumAccount = false;
+
+            await _databaseContext.SaveChangesAsync();
+
+            _notyfService.Success("Hủy phê duyệt tài khoản thành công.");
+
+            return RedirectToAction("GetListUpgradePremiumRequest");
+        }
     }
 }
