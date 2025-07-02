@@ -1,0 +1,35 @@
+﻿@model App.Domain.Entities.Author
+@{
+    ViewData["Title"] = "Xóa ca sĩ - " + Model.Name;
+    var roleClaim = User.Claims.FirstOrDefault(p => p.Type == "role");
+    var isAdminRole = roleClaim != null && roleClaim.Value == "admin";
+}
+
+<div class="col-10">
+    <h3 style=" color: white">
+        Xóa ca sĩ @Model.Name
+    </h3>
+    <div style="color: white">
+        Xác nhận xóa thông tin ca sĩ và toàn bộ thông tin liên quan đến ca sĩ.
+    </div>
+    <form method="post" asp-action="DeleteConfirmation" asp-asp-controller="author">
+        <input style="display: none;" name="Id" value="@Model.Id" />
+        <table class="table">
+            <tr>
+                <td style="color: white">
+                    Tên ca sĩ
+                </td>
+                <td style="color: white">
+                    @Model.Name
+                </td>
+            </tr>
+        </table>
+
+
+        <div class="d-flex flex-row-reverse">
+            <button style="width: 100px;" class="d-block rounded-3 btn btn-primary mx-1" type="submit">Xác nhận</button>
+            <a style="width: 100px;" class="d-block rounded-3 btn btn-danger mx-1" href="/author/getDetail?id=@Model.Id">Hủy</a>
+        </div>
+
+    </form>
+</div>

@@ -1,0 +1,34 @@
+﻿@model App.Domain.Entities.Category
+@{
+    ViewData["Title"] = "Xóa thể loại - " + Model.Name;
+    var roleClaim = User.Claims.FirstOrDefault(p => p.Type == "role");
+    var isAdminRole = roleClaim != null && roleClaim.Value == "admin";
+}
+
+<div class="col-10">
+
+    <h3 style="color: white">
+        Xóa thể loại @Model.Name
+    </h>
+
+    <form method="post" asp-action="DeleteConfirmation" asp-asp-controller="category">
+        <input style="display: none;" name="Id" value="@Model.Id" />
+        <table class="table">
+            <tr>
+                <td style="color: white; font-size: 18px ">
+                    Tên thể loại
+                </td>
+                    <td style="color: white; font-size: 18px ">
+                    @Model.Name
+                </td>
+            </tr>
+        </table>
+
+
+        <div class="d-flex flex-row-reverse">
+            <button style="width: 100px;" class="d-block rounded-3 btn btn-primary mx-1" type="submit">Xác nhận</button>
+            <a style="width: 100px;" class="d-block rounded-3 btn btn-danger mx-1" href="/category/getDetail?id=@Model.Id">Hủy</a>
+        </div>
+
+    </form>
+</div>

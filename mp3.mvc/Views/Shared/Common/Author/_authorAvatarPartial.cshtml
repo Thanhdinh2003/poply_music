@@ -1,0 +1,11 @@
+﻿@{
+    var name = Model.Name == "anonymous" ? "Ẩn danh":  Model.Name;
+}
+<div class="d-flex align-items-center">
+    <a href="/author/getdetail?id=@Model.Id">
+        <img src="@Model.AvatarUrl" style="border-radius:4px; height: 40px; width: 40px; object-fit:contain; overflow: hidden" class="card-img-top">
+    </a>
+    <p class="card-bodys text-center m-0">
+        @name
+    </p>
+</div>

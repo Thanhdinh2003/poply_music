@@ -1,0 +1,33 @@
+﻿@{
+    var id = Guid.NewGuid();
+    var maxSongs = 5;
+}
+
+@for (int i = 0; i < Model.Count && i < maxSongs; i++)
+{
+    var item = Model[i];
+    var itemId = item.Id;
+    var content = item.MediaContent.Count > 0 ? item.MediaContent[0].Value : "/images/media/empty.jpg" ;
+    if (i == 0)
+    {
+        <div class="col song-card" >
+            <div class="card" style="height: 332px; width: 234px">
+                <img src="@content" style="height: 234px;object-fit:contain;" class="card-img-top" alt="Bài Hát 1">
+                <div class="card-bodys" style="text-align:center;  padding-top: 10px">
+                    <a class="card-text" href="/media/play?id=@itemId">@item.Name - @item.Author?.Name</a>
+                </div>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="col song-card">
+            <div class="card" style="height: 332px;  width: 234px">
+                <img src="@content" style="height: 234px;object-fit:contain;" class="card-img-top" alt="Bài Hát 1" @*style="height: 252px;"*@>
+                <div class="card-bodys" style="text-align:center; padding-top: 10px">
+                    <a class="card-text" href="/media/play?id=@itemId">@item.Name - @item.Author?.Name</a>
+                </div>
+            </div>
+        </div>
+    }
+}

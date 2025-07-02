@@ -1,0 +1,108 @@
+﻿@model mp3.mvc.Models.RegisterViewModel
+
+@{
+    ViewData["Title"] = "Register";
+}
+
+
+<div class="col-10 right-div">
+<div class="wrapper fadeInDown">
+    <div id="formContent">
+        <!-- Tabs Titles -->
+        <div class="login-container">
+            <div class="fadeIn">
+                <img src="/images/logo.png" style="max-width:60px;" id="icon" alt="User Icon" />
+            </div>
+            <h1 class="titleLarge">Đăng ký để bắt đầu nghe</h1>
+            <form method="post" asp-action="register" class="resgin-form">
+                <div class="container">
+                    <div class="row">
+                        <!-- Cột bên trái -->
+                        <div class="col-6">
+                            <div class="bSfdyE">
+                                <label class="bGmVWE">Tên người dùng</label>
+                                <input type="text" name="username" class="form-control" placeholder="Tên người dùng">
+                                <br />
+                                <span asp-validation-for="username" class="text-danger"></span>
+                            </div>
+
+                            <div class="bSfdyE">
+                                <label class="bGmVWE">Tên hiển thị</label>
+                                <input type="text" name="displayName" class="form-control" placeholder="Tên hiển thị">
+                                <br />
+                                <span asp-validation-for="displayName" class="text-danger"></span>
+                            </div>
+
+                            <div class="bSfdyE">
+                                <label class="bGmVWE">Ngày sinh</label>
+                                <input type="date" name="dob" class="form-control" value="@DateTime.Now.ToString("yyyy-MM-dd")" />
+                                <span asp-validation-for="dob" class="text-danger"></span>
+                            </div>
+
+                            <div class="bSfdyE" style="margin-top: 12px">
+                                <label class="bGmVWE">Địa chỉ</label>
+                                <input type="text" name="address" class="form-control" placeholder="Nhập địa chỉ">
+                                <br />
+                                <span asp-validation-for="address" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <!-- Cột bên phải -->
+                        <div class="col-6">
+                            <div class="bSfdyE">
+                                <label class="bGmVWE">Email</label>
+                                <input type="text" name="email" class="form-control" placeholder="Email">
+                                <br />
+                                <span asp-validation-for="email" class="text-danger"></span>
+                            </div>
+
+                            <div class="bSfdyE">
+                                <label class="bGmVWE">Mật khẩu</label>
+                                <input type="password" name="password" class="form-control" placeholder="Mật khẩu">
+                                <br />
+                                <span asp-validation-for="password" class="text-danger"></span>
+                            </div>
+
+                            <div class="bSfdyE">
+                                <label class="bGmVWE">Nhập lại mật khẩu</label>
+                                <input type="password" name="repeatedPassword" class="form-control" placeholder="Nhập lại mật khẩu">
+                                <br />
+                                <span asp-validation-for="repeatedPassword" class="text-danger"></span>
+                            </div>
+
+                            <div class="bSfdyE">
+                                <label class="bGmVWE">Giới tính</label>
+                                <select class="form-select custom-select" name="gender">
+                                    <option selected value="0">Nam</option>
+                                    <option value="1">Nữ</option>
+                                    <option value="2">Khác</option>
+                                </select>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-12">
+                            <button class="res-button" type="submit">
+                                Đăng ký
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+
+            <div id="formFooter">
+                <a class="underlineHovera" asp-action="login">Bạn đã có tài khoản? <span class="underlineHover"> Đăng nhập tại đây</span></a>
+            </div>
+
+        </div>
+    </div>
+</div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

@@ -1,0 +1,56 @@
+﻿@{
+    var data = ViewBag.Author;
+    ViewData["Title"] = data.Name;
+    var tracks = ViewBag.Tracks;
+    var roleClaim = User.Claims.FirstOrDefault(p => p.Type == "role");
+    var isAdminRole = roleClaim != null && roleClaim.Value == "admin";
+}
+ 
+<div class="col-10">
+    <div class="d-flex justify-content-between">
+        <h3 style="color: white">
+            Ca sĩ: @data.Name
+        </h3>
+        @if (isAdminRole)
+        {
+            <div class="d-flex">
+                <a style="width: 100px;" class="d-block rounded-3 btn btn-warning mx-1" href="/author/update?id=@data.Id">Sửa</a>
+                <a style="width: 100px;" class="d-block rounded-3 btn btn-danger mx-1" href="/author/delete?id=@data.Id">Xóa</a>
+            </div>
+        }
+    </div>
+    <img src="@data.AvatarUrl" style="height: 150px"/>
+    <h5 style="color: white">Số bài hát: @ViewBag.Tracks.Count</h5>
+    <h5 style="color: white">Số lượt nghe: @ViewData["Views"] </h5>
+
+    <h4 style="color: white">Danh sách bài hát đã phát hành</h4>
+    <table class="table" style="background-color: white; border-radius: 4px;">
+        <thead>
+            <tr>
+                <th scope="col">Số thứ tự</th>
+                <th scope="col">Tên bài hát</th>
+                <th scope="col">Ngày ra mắt</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            @for (var i = 0; i < tracks.Count; i++)
+            {
+                var item = tracks[i];
+                var index = i + 1;
+                <tr>
+                    <td scope="row">
+                        @index
+                    </td>
+                    <td>
+                        <a href="/media/play?id=@item.Id" class="text-dark">@item.Name</a>
+                    </td>
+                    <td>
+                        @item.CreatedAt.ToString("dd-MM-yyyy")
+                    </td>
+                </tr>
+            }
+        </tbody>
+
+    </table>
+</div>

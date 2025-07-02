@@ -1,0 +1,113 @@
+﻿@{
+    var data = ViewBag.Data;
+    ViewData["Title"] = "Tìm kiếm";
+    int type = (int)(ViewData["Type"] ?? 0);
+    var nextPageEnable = data.Page == data.TotalPage ? "disabled" : "";
+    var previousPageBtnEnable = data.Page > 1 ? "" : "disabled";
+    var previousPageLink = $"/home/search?type={ViewData["Type"]}&searchText={ViewData["searchText"]}&page={data.Page - 1}";
+    var nextPageLink = $"/home/search?type={ViewData["Type"]}&searchText={ViewData["searchText"]}&page={data.Page + 1}";
+    var changePreviousPageLink = $"/home/search?type={ViewData["Type"]}&searchText={ViewData["searchText"]}&page=1";
+    var changeNextPageLink = $"/home/search?type={ViewData["Type"]}&searchText={ViewData["searchText"]}&page=1";
+    var musicSideBarStyle = type == 0 ? "side-bar-active" : "";
+    var authorSideBarStyle = type == 1 ? "side-bar-active" : "";
+    var categorySideBarStyle = type == 2 ? "side-bar-active" : "";
+    var itemsList = data.Items as List<App.Domain.Entities.Media>;
+    var authorList = (List<AuthorSearchItemViewModel>)ViewData["AuthorList"];
+    var categoryMediaViewModelList = (List<CategoryMediaViewModel>)ViewData["CategoryMedia"];
+    ViewData["SelectHome"] = "active";
+}
+
+<title> Poply Music - Tìm kiếm</title>
+<head>
+    <link rel="stylesheet" href="~/css/Home.css" asp-append-version="true" />
+</head>
+
+
+<div class="col-10 right-div">
+    <div>
+        @if (ViewData["searchText"] != null && !string.IsNullOrWhiteSpace(ViewData["searchText"].ToString()))
+        {
+            <h3 style="text-align:center; color: white">Kết quả tìm kiếm: @ViewData["searchText"]</h3>
+        }
+        @if (data.TotalItems > 0 || authorList.Count() > 0 || categoryMediaViewModelList.Count > 0)
+        {
+            if (data.TotalItems > 0)
+            {
+                <!-- Bài hát -->
+                <div class="d-flex justify-content-between align-items-center mt-4">
+                    <h4 class="mb-0">Bài hát </h4>
+                </div>
+                <div class="row" style="justify-content:start; gap: 24px">
+                    @foreach (var item in itemsList.Take(5))
+                    {
+                        <div class="col-lg-2 col-md-3 col-sm-4 col-6 mb-4">
+                            <div class="card" style="height: 332px; width: 100%;">
+                                <a href="/media/play?id=@item.Id">
+                                    <partial name="./Common/Media/_musicCardTemplatePartial" model=@item />
+                                </a>
+                            </div>
+                        </div>
+                    }
+                </div>
+
+            }
+
+            if (authorList.Count() > 0)
+            {
+                <!-- Bài hát -->
+                <div class="d-flex justify-content-between align-items-center mt-4">
+                    <h4 class="mb-0">Ca sĩ </h4>
+                </div>
+
+                <div class="row favorite-songs" style="justify-content:start; gap: 24px">
+                    @foreach (var item in authorList.Take(5))
+                    {
+                        <div class="col-lg-2 col-md-3 col-sm-4 col-6 mb-4">
+                            <div class="card" style="height: 332px; width: 100%;">
+                                <a href="/Author/GetDetail?id=@item.Id">
+                                    <partial name="./Common/Author/_authorCardTemplatePartial" model=@item />
+                                </a>
+                            </div>
+                        </div>
+                    }
+                </div>
+            }
+
+            if (categoryMediaViewModelList.Count() > 0)
+            {
+                <!-- Bài hát theo thể loại-->
+
+                @foreach (var item in categoryMediaViewModelList)
+                {
+                    if(item.Medias.Count > 0)
+                    {
+                        <div class="d-flex justify-content-between align-items-center mt-4">
+                            <h4 class="mb-0">Thể loại: @item.Category.Name</h4>
+                            <div class="show-all">
+                                <a class="show-all" href="/category/getDetail?id=@item.Category.Id">Hiển tất cả</a>
+                            </div>
+                        </div>
+
+                        <div class="row favorite-songs" style="justify-content:start; gap: 24px">
+                            @foreach (var mediaItem in item.Medias)
+                            {
+                                <div class="col-lg-2 col-md-3 col-sm-4 col-6 mb-4">
+                                    <div class="card" style="height: 332px; width: 100%;">
+                                        <a href="/media/play?id=@mediaItem.Id">
+                                            <partial name="./Common/Media/_musicCardTemplatePartial" model=@mediaItem />
+                                        </a>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    }   
+                }
+            }
+
+        }
+        else
+        {
+            <div style="text-align:center; color: white">Không tìm thấy kết quả nào</div>
+        }
+    </div>
+</div>

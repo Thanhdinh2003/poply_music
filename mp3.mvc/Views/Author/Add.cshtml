@@ -1,0 +1,38 @@
+﻿@model AuthorAddViewModel
+@{
+    ViewData["Title"] = "Thêm mới ca sĩ";
+}
+
+<div class="col-10">
+    <h3 style=" color: white">
+        Thêm mới ca sĩ
+    </h3>
+
+    <form method="post" asp-action="add" asp-asp-controller="author" enctype="multipart/form-data">
+        <table class="table">
+            <tr>
+                <td style="text-align:center; align-content:center; color: white">
+                    Tên ca sĩ
+                </td>
+                <td>
+                    <input name="Name" type="text" value="@Model.Name" />
+                </td>
+            </tr>
+            <tr>
+                <td style="text-align:center; align-content:center; color: white">
+                    Ảnh:
+                </td>
+                <td>
+                    <input name="Avatar" type="file" class="form-control" />
+                </td>
+            </tr>
+        </table>
+
+
+        <div class="d-flex flex-row-reverse">
+            <button style="width: 100px;" class="d-block rounded-3 btn btn-primary mx-1" type="submit">Lưu</button>
+            <a style="width: 100px;" class="d-block rounded-3 btn btn-danger mx-1" href="/author/index">Hủy</a>
+        </div>
+
+    </form>
+</div>

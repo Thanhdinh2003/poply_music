@@ -1,0 +1,18 @@
+﻿@{
+    var id = Guid.NewGuid();
+    var maxSongs = 5;
+}
+
+@for (int i = 0; i < Model.Count && i < maxSongs; i++)
+{
+    var item = Model[i];
+    <div class="col song-card">
+        <div class="card" style="height: 332px; width: 234px">
+            <img src="@item.AvatarUrl" style="height: 234px;object-fit:contain;" class="card-img-top" alt="Bài Hát 1">
+            <div class="card-bodys" style="text-align:center;  padding-top: 10px;">
+                <a class="card-text" href="/Author/GetDetail?id=@item.Id">@item.Name</a>
+            </div>
+        </div>
+    </div>
+}
+}

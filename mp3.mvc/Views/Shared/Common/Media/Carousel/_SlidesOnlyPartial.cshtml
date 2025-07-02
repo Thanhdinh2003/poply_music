@@ -1,0 +1,44 @@
+﻿@{
+    var id = Guid.NewGuid();
+}
+
+<div id="@id" class="carousel slide bg-dark" data-bs-ride="carousel">
+    <div class="carousel-inner">
+        @for (int i = 0; i < Model.Count; i++)
+        {
+            var item = Model[i];
+            var content = item.MediaContent[0];
+            if (i == 0)
+            {
+                <div class="carousel-item active">
+                    <div class="d-block w-100 d-flex justify-content-center align-items-center text-white">
+                        <a href="#">
+                            <img class="carousel-item-img" src="@content.Value" alt="First slide">
+                        </a>
+                        <div class="mx-4">
+                            <a href="#a" class="text-decoration-none hover-text">@item.Name</a>
+                            <br />
+                            <a href="#b" class="text-decoration-none hover-text">@item.Author?.Name</a>
+                        </div>
+                    </div>
+
+                </div>
+            }
+            else
+            {
+                <div class="carousel-item">
+                    <div class="d-block w-100 d-flex justify-content-center align-items-center text-white">
+                        <a href="#">
+                            <img class="carousel-item-img" src="@content.Value" alt="First slide">
+                        </a>
+                        <div class="mx-4">
+                            <a href="#a" class="text-decoration-none hover-text">@item.Name</a>
+                            <br />
+                            <a href="#b" class="text-decoration-none hover-text">@item.Author?.Name</a>
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+    </div>
+</div>

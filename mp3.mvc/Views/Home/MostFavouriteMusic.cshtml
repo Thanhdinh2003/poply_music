@@ -1,0 +1,57 @@
+﻿@{
+    ViewBag.Title = "Top bài hát yêu thích nhất";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var listMusic = ViewData["ListMusic"];
+    ViewData["SelectHome"] = "active";
+}
+<title> Poply Music - Top bài hát yêu thích nhất</title>
+<head>
+    <link rel="stylesheet" href="~/css/explorer.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/ListMusic.css" asp-append-version="true" />
+</head>
+
+<div class="col-10 right-div">
+    <div class="container-fluid">
+        <!-- Header Section -->
+        <div class="header" style="margin-bottom: 16px">
+
+            <div class="header-square">
+                <p>Top Bài Hát Việt Nam</p>
+            </div>
+
+            <div class="header-info">
+                <h1>Top Bài hát yêu thích nhất</h1>
+                <h2>Bài hát được yêu thích hàng đầu tại Việt Nam</h2>
+                <p style="color: white">Thông tin cập nhật hàng tuần về những bản nhạc được nghe yêu thích hiện nay tại Việt Nam.</p>
+                <p style="color: black" class="spotify">Poply Music • khoảng 3 giờ • 4 bản nhạc mới</p>
+            </div>
+        </div>
+
+        <partial name="./Common/_backgroundImagePartial" model="@(new List<dynamic> { 
+        Url.Content("~/images/background/back4.jpg"),
+        Url.Content("~/images/background/back1.png"),
+        Url.Content("~/images/background/back4.jpg"),
+        Url.Content("~/images/background/back1.png")})" />
+
+        <!-- Playlist Section -->
+        <div class="playlist" style="position: relative">
+            <div class="table-header">
+                <div class="col-title" style="color: #ffffff"># Tiêu đề</div>
+                <div class="col-playcount" style="color: #ffffff">Lượt phát</div>
+                <div class="col-album" style="color: #ffffff">Album</div>
+                <div class="col-time" style="color: #ffffff"><i class="far fa-clock"></i></div>
+            </div>
+
+            <!-- Songs -->
+
+            <partial name="./Common/Media/Carousel/_ListMusic" model="listMusic" />
+
+            <!-- Repeat the song div for more songs... -->
+        </div>
+    </div>
+</div>
+
+
+
+
+

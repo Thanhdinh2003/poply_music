@@ -1,0 +1,70 @@
+﻿@model App.Domain.Entities.Media
+@{
+    ViewData["Title"] = "Xóa bài hát - " + Model.Name;
+    var roleClaim = User.Claims.FirstOrDefault(p => p.Type == "role");
+    var isAdminRole = roleClaim != null && roleClaim.Value == "admin";
+}
+
+
+<div class="col-10">
+    <h3 style="color: white">
+        Xóa bài hát @Model.Name
+    </h3>
+    <div style="color: white">
+        Xác nhận xóa thông tin bài hát và toàn bộ thông tin liên quan đến bài hát.
+    </div>
+    <form method="post" asp-action="DeleteConfirmation" asp-asp-controller="media">
+        <input style="display: none;" name="Id" value="@Model.Id" />
+        <table class="table">
+            <tr>
+                <td style="color: white; font-size: 18px ">
+                    Tên bài hát
+                </td>
+                <td style="color: white; font-size: 18px ">
+                    @Model.Name
+                </td>
+            </tr>
+            <tr>
+                <td style="color: white; font-size: 18px ">
+                    Ảnh
+                </td>
+                <td style="color: white; font-size: 18px ">
+                    <partial class="formContent" name="./Common/Media/_musicAvatarPreviewPartial" model="@Model.MediaContent" style="width: 332px" />
+                </td>
+            </tr>
+            <tr>
+                <td style="color: white; font-size: 18px ">
+                    Ngày phát hành
+                </td>
+                <td style="color: white; font-size: 18px ">
+                    @Model.CreatedAt
+                </td>
+            </tr>
+            <tr>
+                <td style="color: white; font-size: 18px ">
+                    Tên ca sĩ
+                </td>
+                <td style="color: white; font-size: 18px ">
+                    @Model.Author?.Name
+                </td>
+            </tr>
+            <tr>
+                <td style="color: white; font-size: 18px ">
+                    Tên thể loại
+                </td>
+                <td style="color: white; font-size: 18px ">
+                    @Model.Category?.Name
+                </td>
+            </tr>
+        </table>
+
+
+        <div class="d-flex flex-row-reverse">
+            <button style="width: 100px;" class="d-block rounded-3 btn btn-primary mx-1" type="submit">Xác nhận</button>
+            <a style="width: 100px;" class="d-block rounded-3 btn btn-danger mx-1" href="/media/manage">Hủy</a>
+        </div>
+
+    </form>
+
+</div>
+

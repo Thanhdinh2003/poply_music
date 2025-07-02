@@ -1,0 +1,167 @@
+﻿.right-div {
+    padding: 0;
+}
+
+.content-right {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.right-all {
+    font-size: 16px;
+    background-color: white;
+    padding: 10px;
+    border-radius: 20px;
+}
+
+.right-music {
+    font-size: 16px;
+    color: white;
+}
+
+.right-all, .right-music {
+    padding: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+    .right-all:hover, .right-music:hover {
+        color: #1DB954;
+    }
+
+.show-all-a {
+    cursor: pointer;
+}
+
+
+a:hover {
+    color: #1DB954;
+}
+
+
+.card-topvn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 24px
+}
+
+
+.cards {
+    position: relative;
+    width: 580px;
+    height: 500px;
+    background-image: url('https://media.viez.vn/prod/2021/11/17/258081748_332437662024259_4124508769488074589_n_25b565d974.png');
+    background-size: cover;
+    background-position: center;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+    .cards::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+    }
+
+.top-label {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    background-color: rgba(255, 255, 255, 0.2);
+    padding: 8px 12px;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    color: #fff;
+}
+
+    .top-label img {
+        width: 20px;
+        height: 20px;
+        margin-right: 8px;
+    }
+
+.content {
+    position: absolute;
+    bottom: 30px;
+    left: 20px;
+    color: #fff;
+}
+
+.title {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 8px;
+}
+
+.subtitle {
+    font-size: 16px;
+    opacity: 0.8;
+}
+
+
+
+.cardsd {
+    position: relative;
+    width: 580px;
+    height: 500px;
+    background-image: url('https://media-api.advertisingvietnam.com/oapi/v1/media?uuid=bf919238-3ac3-4964-ad35-ec14a10fc578&resolution=1000x&keepOriginal=true');
+    background-size: cover;
+    background-position: center;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+    .cardsd::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+    }
+
+.top-labels {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    background-color: rgba(255, 255, 255, 0.2);
+    padding: 8px 12px;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    color: #fff;
+}
+
+    .top-labels img {
+        width: 20px;
+        height: 20px;
+        margin-right: 8px;
+    }
+
+.contents {
+    position: absolute;
+    bottom: 30px;
+    left: 20px;
+    color: #fff;
+}
+
+.titles {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 8px;
+}
+
+.subtitles {
+    font-size: 16px;
+    opacity: 0.8;
+}
